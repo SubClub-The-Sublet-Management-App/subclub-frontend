@@ -24,8 +24,12 @@ export default function LogInPage() {
         { email, password },
         { withCredentials: true }
       );
+
       // Set to true when the user logs in successfully
       setIsAuthenticated(true);
+
+      // Store the user token in localStorage
+      localStorage.setItem('userToken', response.data.token);
 
       // set the message to display in the modal
       setModalMessage(response.data.message);
@@ -34,11 +38,11 @@ export default function LogInPage() {
       // navigate to the root page after a delay
       setTimeout(() => {
         navigate('/');
-      }, 1000);
+      }, 500);
     } catch (error) {
       // extract the error message from the response
       const errorMessage = error.response.data.message;
-    
+
       // set the error message to display in the modal
       setModalMessage(errorMessage);
       setIsModalOpen(true);
@@ -124,20 +128,10 @@ export default function LogInPage() {
                   />
                 </div>
               </div>
-
-              <div className='text-sm text-center'>
-                <a
-                  href='#'
-                  className='font-semibold text-primary hover:text-indigo-500'
-                >
-                  Forgot password?
-                </a>
-              </div>
-
               <div>
                 <button
                   type='submit'
-                  className='flex w-full justify-center rounded-md bg-primary px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary'
+                  className='flex justify-center align-middle w-full rounded-md bg-primary px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary'
                 >
                   Sign in
                 </button>
