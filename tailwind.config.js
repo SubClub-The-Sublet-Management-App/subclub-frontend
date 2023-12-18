@@ -10,12 +10,12 @@ module.exports = {
         '30vh': '30vh',
       },
       colors: {
-        'primary': '#7E49F2',
-        'secondary': '#464076',
-        'accent': 'F2B705',
+        primary: '#7E49F2',
+        secondary: '#464076',
+        accent: 'F2B705',
         'light-primary': '#8F82F8',
         'light-secondary': '#9994BF',
-        'dark-bg':'#170F54'
+        'dark-bg': '#170F54',
       },
     },
   },

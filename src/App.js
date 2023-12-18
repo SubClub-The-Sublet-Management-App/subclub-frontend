@@ -49,15 +49,15 @@ function App() {
                         </PrivateRoute>
                       }
                     />
-                    <Route path='rooms' element={<Outlet />}>
-                      <Route
-                        index
-                        element={
-                          <PrivateRoute>
-                            <RoomsPage />
-                          </PrivateRoute>
-                        }
-                      />
+
+                    <Route
+                      path='rooms'
+                      element={
+                        <PrivateRoute>
+                          <RoomsPage />
+                        </PrivateRoute>
+                      }
+                    >
                       <Route
                         path='add-room'
                         element={
@@ -67,15 +67,15 @@ function App() {
                         }
                       />
                     </Route>
-                    <Route path='occupants' element={<Outlet />}>
-                      <Route
-                        index
-                        element={
-                          <PrivateRoute>
-                            <OccupantsPage />
-                          </PrivateRoute>
-                        }
-                      />
+
+                    <Route
+                      path='occupants'
+                      element={
+                        <PrivateRoute>
+                          <OccupantsPage />
+                        </PrivateRoute>
+                      }
+                    >
                       <Route
                         path='add-occupant'
                         element={
@@ -85,15 +85,15 @@ function App() {
                         }
                       />
                     </Route>
-                    <Route path='room-assignments' element={<Outlet />}>
-                      <Route
-                        index
-                        element={
-                          <PrivateRoute>
-                            <RoomAssignmentsPage />
-                          </PrivateRoute>
-                        }
-                      />
+
+                    <Route
+                      path='room-assignments'
+                      element={
+                        <PrivateRoute>
+                          <RoomAssignmentsPage />
+                        </PrivateRoute>
+                      }
+                    >
                       <Route
                         path='add-room-assignment'
                         element={
@@ -103,15 +103,15 @@ function App() {
                         }
                       />
                     </Route>
-                    <Route path='payment-records' element={<Outlet />}>
-                      <Route
-                        index
-                        element={
-                          <PrivateRoute>
-                            <PaymentRecordsPage />
-                          </PrivateRoute>
-                        }
-                      />
+
+                    <Route
+                      path='payment-records'
+                      element={
+                        <PrivateRoute>
+                          <PaymentRecordsPage />
+                        </PrivateRoute>
+                      }
+                    >
                       <Route
                         path='add-payment-record'
                         element={

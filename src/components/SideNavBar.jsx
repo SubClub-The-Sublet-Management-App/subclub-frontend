@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
+import logo from '../assets/images/sub-club-logo.svg';
 import { FaAngleDoubleLeft, FaBars } from 'react-icons/fa';
 import {
   FaHome,
@@ -73,7 +74,7 @@ function SideNavBar() {
       <header className='pos-r h-screen inline-flex flex-col bg-white shadow p-6'>
         <div className='app-logo'>
           {/*  logo */}
-          <img src='/path/to/logo.png' alt='Logo' className='w-24 h-24' />
+          <img src={logo} alt='Logo' className='w-24 h-24' />
         </div>
         {!isEnlarge && (
           <button
