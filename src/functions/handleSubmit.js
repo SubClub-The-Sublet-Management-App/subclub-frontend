@@ -1,7 +1,5 @@
-import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 
-const handleSubmit = async (url, data) => {
+const handleSubmit = async (url, data, onSuccess, onFailure) => {
     try {
         const response = await fetch(url, {
             method: 'POST',
@@ -15,14 +13,12 @@ const handleSubmit = async (url, data) => {
 
         if (response.ok) {
             console.log(responseData);
-            toast.success(responseData.message); // display the success message from the backend
+            onSuccess(responseData); // call the onSuccess callback
         } else {
-            toast.error(responseData.message || 'Something went wrong'); // display the error message from the backend
+            onFailure(responseData); // call the onFailure callback
         }
     } catch (error) {
-        // handle network error or JSON parsing error
-        toast.error(error.message || 'Network error');
+        onFailure({ message: error.message || 'Network error' }); // call the onFailure callback
     }
 };
-
 export default handleSubmit;

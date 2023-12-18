@@ -1,14 +1,36 @@
-import React from 'react';
+
+import { React, useState } from 'react';
 import logo from '../assets/images/sub-club-logo.svg'; 
 import handleSubmit  from '../functions/handleSubmit';
-import 'react-toastify/dist/ReactToastify.css';
+import { useNavigate } from 'react-router-dom';
+import ModalMessages from '../components/ModalMessages';
 
 
 export default function SignUpPage(){
+    const navigate = useNavigate();
 
+    const [isModalOpen, setIsModalOpen] = useState(false); // control the visibility of the modal
+    const [modalMessage, setModalMessage] = useState(''); // control the message displayed in the modal
+
+
+    const handleSignUp = (data) => {
+        handleSubmit('https://sub-club-ce3cc207c2f9.herokuapp.com/auth/signup', data, (responseData) => {
+            setModalMessage(responseData.message); // set the message to display in the modal
+            setIsModalOpen(true); // open the modal
+    
+            // navigate to the login page after a delay
+            setTimeout(() => {
+                navigate('/login');
+            }, 2000); 
+        }, (errorData) => {
+            setModalMessage(errorData.message); // set the error message to display in the modal
+            setIsModalOpen(true); // open the modal
+        });
+    };
 
     return (
         <div className="flex flex-col sm:lg:flex-row">
+
             <div className="w-full h-30vh sm:lg:h-full sm:lg:w-1/2 relative">
                 <img className="w-full h-full object-cover" src="https://images.unsplash.com/photo-1582298538104-fe2e74c27f59?q=80&w=1587&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWgelfHx8fGVufDB8fHx8fA%3D%3D" alt="house mates" />
                 <p className="absolute bottom-0 left-0 px-1 text-gray-300">Photo by <a href="https://unsplash.com/@heftiba?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash" className="text-white">Toa Heftiba</a> on <a href="https://unsplash.com/photos/woman-in-black-and-white-checkered-long-sleeve-shirt-sitting-beside-man-in-green-crew-neck-l_ExpFwwOEg?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash" className="text-white">Unsplash</a></p>
@@ -28,7 +50,7 @@ export default function SignUpPage(){
                         const email = event.target.elements.email.value;
                         const password = event.target.elements.password.value;
 
-                        handleSubmit('https://sub-club-ce3cc207c2f9.herokuapp.com/auth/signup', { firstName, lastName, email, password });
+                        handleSignUp({ firstName, lastName, email, password });
                     }}>
                         <div className="flex justify-between">
                         <div className="w-1/2 pr-2">
@@ -76,7 +98,7 @@ export default function SignUpPage(){
                     </div>
                 </div>
             </div>
-
+            <ModalMessages isOpen={isModalOpen} message={modalMessage} onClose={() => setIsModalOpen(false)} />
         </div>
     )
 }
