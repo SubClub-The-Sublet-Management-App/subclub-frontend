@@ -13,12 +13,15 @@ import NewRoomAssignmentPage from './pages/NewRoomAssignmentPage';
 import PaymentRecordsPage from './pages/PaymentRecordsPage';
 import NewPaymentRecordPage from './pages/NewPaymentRecordPage';
 import SideNavBar from './components/SideNavBar';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 function App() {
   return (
     <div className="App-container flex">
       <div className="flex-grow">
+      <ToastContainer />
       
       <Routes>
         <Route path="signup" element={<SignUpPage />} />

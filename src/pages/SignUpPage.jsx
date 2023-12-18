@@ -1,7 +1,6 @@
 import React from 'react';
 import logo from '../assets/images/sub-club-logo.svg'; 
 import handleSubmit  from '../functions/handleSubmit';
-import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 
@@ -29,7 +28,7 @@ export default function SignUpPage(){
                         const email = event.target.elements.email.value;
                         const password = event.target.elements.password.value;
 
-                        handleSubmit('https://sub-club-ce3cc207c2f9.herokuapp.com/', { firstName, lastName, email, password });
+                        handleSubmit('https://sub-club-ce3cc207c2f9.herokuapp.com/auth/signup', { firstName, lastName, email, password });
                     }}>
                         <div className="flex justify-between">
                         <div className="w-1/2 pr-2">
