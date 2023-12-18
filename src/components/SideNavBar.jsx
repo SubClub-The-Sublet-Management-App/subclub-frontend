@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
-import logo from '../assets/images/sub-club-logo.svg';
-import { FaAngleDoubleLeft, FaBars } from 'react-icons/fa';
 import {
   FaHome,
   FaUser,
@@ -9,6 +7,8 @@ import {
   FaUsers,
   FaRegCalendarAlt,
   FaMoneyBillWave,
+  FaTimes,
+  FaBars
 } from 'react-icons/fa';
 
 function SideNavBar() {
@@ -70,46 +70,40 @@ function SideNavBar() {
   }, []);
 
   return (
-    <div className='min-h-screen bg-gray-200 w-1/4'>
-      <header className='pos-r h-screen inline-flex flex-col bg-white shadow p-6'>
-        <div className='app-logo'>
-          {/*  logo */}
-          <img src={logo} alt='Logo' className='w-24 h-24' />
-        </div>
-        {!isEnlarge && (
-          <button
-            className='h-8 w-8 p-1 bg-gray-100 text-gray-600 rounded-lg mx-auto border border-solid border-gray-200 hover:border-gray-300'
-            onClick={() => setIsEnlarge(!isEnlarge)}
+<div className={`min-h-screen transition-all duration-700 ease-in-out transform ${isEnlarge ? 'w-64 bg-lightPrimary' : 'w-0'} ${isEnlarge ? 'lg:block' : 'lg:hidden'}`}>
+  <div className="flex flex-col">
+    <button
+      className='lg:hidden h-10 w-10 mt-6 ml-6 p-1 text-primary  hover:text-yellow-400'
+      onClick={() => setIsEnlarge(!isEnlarge)}
+    >
+      {isEnlarge ? <FaTimes className='h-full w-full' /> : <FaBars className='h-full w-full'/>}
+    </button>
+    <div className="nav-container pt-10">
+      <nav
+        className={`inline-flex flex-col space-y-2 ${
+          isEnlarge ? 'block' : 'hidden'
+        }`}
+      >
+        {isEnlarge && nav.map((link, index) => (
+          <NavLink
+            key={index}
+            to={link.to}
+            className={`flex items-center ${isEnlarge ? 'text-white ml-6' : 'text-gray-600'} py-2 cursor-pointer hover:bg-indigo-100 hover:text-primary ${
+              selected === index ? 'text-yellow-300' : ''
+            } pl-2 pr-6 w-48`}
+            onClick={() => setSelected(index)}
           >
-            {isEnlarge ? <FaAngleDoubleLeft /> : <FaBars />}
-          </button>
-        )}
-        <nav
-          className={`inline-flex flex-col space-y-2 ${
-            isEnlarge ? 'block' : 'hidden'
-          }`}
-        >
-          {nav.map((link, index) => (
-            <NavLink
-              key={index}
-              to={link.to}
-              className={`flex items-center text-gray-600 py-2 cursor-pointer hover:bg-gray-100 ${
-                selected === index ? 'bg-indigo-100 text-indigo-500' : ''
-              } ${isEnlarge ? 'pl-2 pr-6 rounded-lg' : 'px-2 rounded-full'}`}
-              onClick={() => setSelected(index)}
-            >
-              <span className={`w-8 h-8 p-1 ${isEnlarge ? 'mr-4' : ''}`}>
-                {selected === index ? <link.selectedIcon /> : <link.icon />}
-              </span>
-              {isEnlarge && (
-                <span className='font-medium select-none'>{link.name}</span>
-              )}
-            </NavLink>
-          ))}
-        </nav>
-      </header>
+            <span className='w-8 h-8 p-1 flex items-center justify-center mr-4'>
+              {selected === index ? React.createElement(link.selectedIcon) : React.createElement(link.icon)}
+            </span>
+            <span className='font-medium select-none sm:block lg:block'>{link.name}</span>
+          </NavLink>
+        ))}
+      </nav>
     </div>
+  </div>
+</div>
   );
-}
+  }
 
 export default SideNavBar;
