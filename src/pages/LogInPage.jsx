@@ -25,8 +25,8 @@ export default function LogInPage() {
         { withCredentials: true }
       );
       // Set to true when the user logs in successfully
-      setIsAuthenticated(true); 
-      
+      setIsAuthenticated(true);
+
       // set the message to display in the modal
       setModalMessage(response.data.message);
       setIsModalOpen(true);
