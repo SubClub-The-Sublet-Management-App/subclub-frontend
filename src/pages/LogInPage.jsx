@@ -34,10 +34,13 @@ export default function LogInPage() {
       // navigate to the root page after a delay
       setTimeout(() => {
         navigate('/');
-      }, 500);
+      }, 1000);
     } catch (error) {
+      // extract the error message from the response
+      const errorMessage = error.response.data.message;
+    
       // set the error message to display in the modal
-      setModalMessage(error.message);
+      setModalMessage(errorMessage);
       setIsModalOpen(true);
     }
   };
