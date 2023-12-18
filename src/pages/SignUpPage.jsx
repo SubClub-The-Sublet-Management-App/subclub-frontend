@@ -1,12 +1,12 @@
 import React from 'react';
 import logo from '../assets/images/sub-club-logo.svg'; 
-import handleSubmit  from '../functions/handleSumit';
+import handleSubmit  from '../functions/handleSubmit';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 
 export default function SignUpPage(){
-    
+
 
     return (
         <div className="flex flex-col sm:lg:flex-row">
