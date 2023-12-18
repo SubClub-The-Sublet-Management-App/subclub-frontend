@@ -11,7 +11,7 @@ const handleSubmit = async (url, data, onSuccess, onFailure) => {
     const responseData = await response.json();
 
     if (response.ok) {
-      console.log(responseData);
+      // console.log(responseData);
       onSuccess(responseData); // call the onSuccess callback
     } else {
       onFailure(responseData); // call the onFailure callback
