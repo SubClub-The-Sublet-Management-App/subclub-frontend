@@ -1,4 +1,4 @@
-import { React, useState } from 'react';
+import React, { useState } from 'react';
 import logo from '../assets/images/sub-club-logo.svg';
 import handleSubmit from '../functions/handleSubmit';
 import { useNavigate } from 'react-router-dom';
@@ -7,16 +7,19 @@ import ModalMessages from '../components/ModalMessages';
 export default function SignUpPage() {
   const navigate = useNavigate();
 
-  const [isModalOpen, setIsModalOpen] = useState(false); // control the visibility of the modal
-  const [modalMessage, setModalMessage] = useState(''); // control the message displayed in the modal
+  // control the visibility of the modal
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  // control the message displayed in the modal
+  const [modalMessage, setModalMessage] = useState('');
 
   const handleSignUp = (data) => {
     handleSubmit(
       'https://sub-club-ce3cc207c2f9.herokuapp.com/auth/signup',
       data,
       (responseData) => {
-        setModalMessage(responseData.message); // set the message to display in the modal
-        setIsModalOpen(true); // open the modal
+        // set the message to display in the modal
+        setModalMessage(responseData.message);
+        setIsModalOpen(true);
 
         // navigate to the login page after a delay
         setTimeout(() => {
@@ -24,8 +27,9 @@ export default function SignUpPage() {
         }, 2000);
       },
       (errorData) => {
-        setModalMessage(errorData.message); // set the error message to display in the modal
-        setIsModalOpen(true); // open the modal
+        // set the error message to display in the modal
+        setModalMessage(errorData.message);
+        setIsModalOpen(true);
       }
     );
   };

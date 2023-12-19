@@ -32,8 +32,6 @@ function App() {
                 <SideNavBar className='lg:w-1/4 md:w-auto sm:w-autho sm:h-6' />
                 <Header className='h-auto w-3/4 righ-0' />
                 <div className='w-full pt-16 pb-16 mx-6 lg:w-3/4'>
-                  <h1 className='text-3xl font-bold underline'>Hello world!</h1>
-
                   <Outlet />
                   <Footer className='self-end' />
                 </div>
