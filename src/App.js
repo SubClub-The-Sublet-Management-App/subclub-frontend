@@ -14,6 +14,8 @@ import PaymentRecordsPage from './pages/PaymentRecordsPage';
 import NewPaymentRecordPage from './pages/NewPaymentRecordPage';
 import SideNavBar from './components/SideNavBar';
 import PrivateRoute from './components/PrivateRoute';
+import Footer from './components/Footer';
+import Header from './components/Header';
 
 function App() {
   return (
@@ -26,11 +28,14 @@ function App() {
           <Route
             path='*'
             element={
-              <div className='App-container grid grid-cols-4'>
-                <SideNavBar />
-                <div className='col-span-3'>
+              <div className='App-container flex lg:flex-row'>
+                <SideNavBar className='lg:w-1/4 md:w-auto sm:w-autho sm:h-6' />
+                <Header className='h-auto w-3/4 righ-0' />
+                <div className='w-full pt-16 pb-16 mx-6 lg:w-3/4'>
                   <h1 className='text-3xl font-bold underline'>Hello world!</h1>
+
                   <Outlet />
+                  <Footer className='self-end' />
                 </div>
               </div>
             }
