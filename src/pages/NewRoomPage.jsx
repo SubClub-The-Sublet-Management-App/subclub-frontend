@@ -60,7 +60,7 @@ export default function NewRoomPage() {
               <div className='w-full sm:w-1/2 p-2'>
                 <label
                   htmlFor='name'
-                  className='block text-sm font-medium leading-6 text-gray-900'
+                  className='label-field'
                 >
                   Give your room a name
                 </label>
@@ -71,14 +71,14 @@ export default function NewRoomPage() {
                     type='name'
                     autoComplete='name'
                     required
-                    className='px-2 block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary sm:text-sm sm:leading-6'
+                    className='input-field'
                   />
                 </div>
               </div>
               <div className='w-full sm:w-1/2 p-2'>
                 <label
                   htmlFor='monthlyRentalPrice'
-                  className='block text-sm font-medium leading-6 text-gray-900'
+                  className='label-field'
                 >
                   How much will this room cost per month?
                 </label>
@@ -89,14 +89,14 @@ export default function NewRoomPage() {
                     type='monthlyRentalPrice'
                     autoComplete='monthlyRentalPrice'
                     required
-                    className='px-2 block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary sm:text-sm sm:leading-6'
+                    className='input-field'
                   />
                 </div>
               </div>
               <div className='w-full p-2'>
                 <label
                   htmlFor='description'
-                  className='block text-sm font-medium leading-6 text-gray-900'
+                  className='label-field'
                 >
                   What is the best thing about your room?
                 </label>
@@ -107,14 +107,14 @@ export default function NewRoomPage() {
                     type='description'
                     autoComplete='description'
                     required
-                    className='px-2 block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary sm:text-sm sm:leading-6'
+                    className='input-field'
                   />
                 </div>
               </div>
               <div className='w-full p-2'>
                 <label
                   htmlFor='content'
-                  className='block text-sm font-medium leading-6 text-gray-900'
+                  className='label-field'
                 >
                   What things come with the room?
                 </label>
@@ -125,7 +125,7 @@ export default function NewRoomPage() {
                     type='content'
                     autoComplete='content'
                     required
-                    className='px-2 block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary sm:text-sm sm:leading-6'
+                    className='input-field'
                   />
                 </div>
               </div>
@@ -133,7 +133,7 @@ export default function NewRoomPage() {
             <div className='flex justify-center align-middle '>
               <button
                 type='submit'
-                className='flex w-1/2 justify-center rounded-md bg-primary px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary'
+                className='button w-1/2 justify-center'
               >
                 Create Room
               </button>
