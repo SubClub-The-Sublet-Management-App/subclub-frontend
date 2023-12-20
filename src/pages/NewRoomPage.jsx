@@ -10,7 +10,7 @@ export default function NewRoomPage() {
   const [isModalOpen, setIsModalOpen] = useState(false); // control the visibility of the modal messages
   const [modalMessage, setModalMessage] = useState(''); // control the message displayed in the modal
 
-  const handleSignUp = (data) => {
+  const handleCreateRoom = (data) => {
     handleSubmit(
       'https://sub-club-ce3cc207c2f9.herokuapp.com/rooms',
       data,
@@ -18,7 +18,7 @@ export default function NewRoomPage() {
         setModalMessage(responseData.message); // set the message to display in the modal
         setIsModalOpen(true); // open the modal
 
-        // navigate to the login page after a delay
+        // navigate to the rooms page after a delay
         setTimeout(() => {
           navigate('/rooms');
         }, 2000);
@@ -53,15 +53,17 @@ export default function NewRoomPage() {
               const description = event.target.elements.description.value;
               const content = event.target.elements.content.value;
 
-              handleSignUp({ name, monthlyRentalPrice, description, content });
+              handleCreateRoom({
+                name,
+                monthlyRentalPrice,
+                description,
+                content,
+              });
             }}
           >
             <div className='flex flex-wrap justify-between w-full'>
               <div className='w-full sm:w-1/2 p-2'>
-                <label
-                  htmlFor='name'
-                  className='label-field'
-                >
+                <label htmlFor='name' className='label-field'>
                   Give your room a name
                 </label>
                 <div className='mt-2'>
@@ -76,10 +78,7 @@ export default function NewRoomPage() {
                 </div>
               </div>
               <div className='w-full sm:w-1/2 p-2'>
-                <label
-                  htmlFor='monthlyRentalPrice'
-                  className='label-field'
-                >
+                <label htmlFor='monthlyRentalPrice' className='label-field'>
                   How much will this room cost per month?
                 </label>
                 <div className='mt-2'>
@@ -94,10 +93,7 @@ export default function NewRoomPage() {
                 </div>
               </div>
               <div className='w-full p-2'>
-                <label
-                  htmlFor='description'
-                  className='label-field'
-                >
+                <label htmlFor='description' className='label-field'>
                   What is the best thing about your room?
                 </label>
                 <div className='mt-2'>
@@ -112,10 +108,7 @@ export default function NewRoomPage() {
                 </div>
               </div>
               <div className='w-full p-2'>
-                <label
-                  htmlFor='content'
-                  className='label-field'
-                >
+                <label htmlFor='content' className='label-field'>
                   What things come with the room?
                 </label>
                 <div className='mt-2'>
@@ -131,10 +124,7 @@ export default function NewRoomPage() {
               </div>
             </div>
             <div className='flex justify-center align-middle '>
-              <button
-                type='submit'
-                className='button w-1/2 justify-center'
-              >
+              <button type='submit' className='button w-1/2 justify-center'>
                 Create Room
               </button>
             </div>
