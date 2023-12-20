@@ -76,6 +76,7 @@ export default function RoomsPage() {
           </div>
           {/* Display room: name, rental price, description and content */}
           {rooms.data.map((room) => (
+             isRoomDataVisible || (isEditing && editedRoom === room) ? (
             <div
               className=' bg-gray-100 p-6 rounded-lg shadow-lg m-8'
               key={room._id}
@@ -126,6 +127,7 @@ export default function RoomsPage() {
                 </>
               )}
             </div>
+             ) : null
           ))}
         </>
       ) : (
