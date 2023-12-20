@@ -2,7 +2,9 @@ import { useLocation, Outlet, useNavigate } from 'react-router-dom';
 import useFetch from '../functions/useFetch';
 import { AiOutlinePlus, AiOutlineEdit } from 'react-icons/ai';
 import { useState, useEffect } from 'react';
-import EditRoom from '../components/EditRoom'; // import the EditRoom component
+import EditRoom from '../components/EditRoom'; 
+import DeleteRoom from '../components/DeleteRoom';
+import { ClipLoader } from 'react-spinners';
 
 export default function RoomsPage() {
   // Get location to navigate to "add-room" page
@@ -25,14 +27,20 @@ export default function RoomsPage() {
   }, [isNewRoomAdded, refetch]);
   
   // To hide data from the get request when rooms is being updating
-  const [setIsRoomDataVisible] = useState(true);
+  const [isRoomDataVisible, setIsRoomDataVisible] = useState(true);
 
   // Set the state for edit room
   const [isEditing, setIsEditing] = useState(false);
   const [editedRoom, setEditedRoom] = useState(null);
 
   // Loading handling
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) {
+    return (
+      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+        <ClipLoader color="#8F82F8" size={150} />
+      </div>
+    );
+  }
   // Error handling
   if (error) return <div>Error: {error}</div>;
 
@@ -91,16 +99,20 @@ export default function RoomsPage() {
                       ))}
                     </ul>
                   </div>
+                  <div className='w-full flex justify-end'>
                   <button
                     onClick={() => {
                       setIsEditing(true);
                       setEditedRoom(room);
-                      setIsRoomDataVisible(false); // hide the room data
+                      setIsRoomDataVisible(false);
                     }}
-                    className='w-full flex justify-end'
                   >
-                    <AiOutlineEdit className='text-lightPrimary w-6 h-6' />
+                    <AiOutlineEdit className='text-lightPrimary w-6 h-6 mb-2' />
                   </button>
+                  <DeleteRoom id={room._id} refetch={refetch}  />
+
+                  </div>
+
                 </>
               )}
             </div>
