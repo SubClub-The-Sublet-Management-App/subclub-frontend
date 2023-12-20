@@ -20,7 +20,7 @@ export default function NewRoomPage() {
 
         // navigate to the rooms page after a delay
         setTimeout(() => {
-          navigate('/rooms');
+          navigate('/rooms', { state: { isNewRoomAdded: true } });
         }, 2000);
       },
       // send messages with Modal if there is any error

@@ -1,24 +1,35 @@
 import { useLocation, Outlet, useNavigate } from 'react-router-dom';
 import useFetch from '../functions/useFetch';
 import { AiOutlinePlus, AiOutlineEdit } from 'react-icons/ai';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import EditRoom from '../components/EditRoom'; // import the EditRoom component
 
 export default function RoomsPage() {
   // Get location to navigate to "add-room" page
   const location = useLocation();
   const navigate = useNavigate();
+  const [isNewRoomAdded, setIsNewRoomAdded] = useState(false);
+  const { data: rooms, isLoading, error, refetch } = useFetch('https://sub-club-ce3cc207c2f9.herokuapp.com/rooms');
 
+  useEffect(() => {
+    if (location.state?.isNewRoomAdded) {
+      setIsNewRoomAdded(true);
+    }
+  }, [location]);
+
+  useEffect(() => {
+    if (isNewRoomAdded) {
+      refetch();
+      setIsNewRoomAdded(false);
+    }
+  }, [isNewRoomAdded, refetch]);
+  
+  // To hide data from the get request when rooms is being updating
   const [setIsRoomDataVisible] = useState(true);
 
   // Set the state for edit room
   const [isEditing, setIsEditing] = useState(false);
   const [editedRoom, setEditedRoom] = useState(null);
-
-  // Fetch data from the backend
-  const { data, error, isLoading, refetch } = useFetch(
-    'https://sub-club-ce3cc207c2f9.herokuapp.com/rooms'
-  );
 
   // Loading handling
   if (isLoading) return <div>Loading...</div>;
@@ -34,7 +45,7 @@ export default function RoomsPage() {
         <>
           {/* Button to navigate to add rooms page */}
 
-          <div className='flex justify-end w-full'>
+          <div className='py-2 flex justify-end w-full'>
             <button
               className='button items-center'
               onClick={() => navigate('/rooms/add-room')}
@@ -44,9 +55,9 @@ export default function RoomsPage() {
             </button>
           </div>
           {/* Display room: name, rental price, description and content */}
-          {data.data.map((room) => (
+          {rooms.data.map((room) => (
             <div
-              className=' bg-white p-6 rounded-lg shadow-lg m-8'
+              className=' bg-gray-100 p-6 rounded-lg shadow-lg m-8'
               key={room._id}
             >
               {isEditing && editedRoom === room ? (
