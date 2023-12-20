@@ -8,7 +8,7 @@ export default function DeleteRoom({ id, refetch }) {
   const [isLoading, setIsLoading] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalMessage, setModalMessage] = useState('');
-  const token = localStorage.getItem('userToken'); 
+  const token = localStorage.getItem('userToken');
 
   const handleDelete = async () => {
     setIsLoading(true);
@@ -19,7 +19,7 @@ export default function DeleteRoom({ id, refetch }) {
           method: 'DELETE',
           headers: {
             'Content-Type': 'application/json',
-            Authorization: `Bearer ${token}`, 
+            Authorization: `Bearer ${token}`,
           },
         }
       );

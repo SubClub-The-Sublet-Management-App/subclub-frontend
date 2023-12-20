@@ -70,7 +70,7 @@ export default function NewRoomPage() {
                   <input
                     id='name'
                     name='name'
-                    type='name'
+                    type='text'
                     autoComplete='name'
                     required
                     className='input-field'
@@ -85,7 +85,7 @@ export default function NewRoomPage() {
                   <input
                     id='monthlyRentalPrice'
                     name='monthlyRentalPrice'
-                    type='monthlyRentalPrice'
+                    type='text'
                     autoComplete='monthlyRentalPrice'
                     required
                     className='input-field'
@@ -100,7 +100,7 @@ export default function NewRoomPage() {
                   <input
                     id='description'
                     name='description'
-                    type='description'
+                    type='text'
                     autoComplete='description'
                     required
                     className='input-field'
@@ -115,7 +115,7 @@ export default function NewRoomPage() {
                   <input
                     id='content'
                     name='content'
-                    type='content'
+                    type='text'
                     autoComplete='content'
                     required
                     className='input-field'
