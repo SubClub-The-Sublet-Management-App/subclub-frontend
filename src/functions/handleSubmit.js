@@ -1,23 +1,31 @@
-const handleSubmit = async (url, data, onSuccess, onFailure) => {
+async function handleSubmit(
+  url,
+  data,
+  onSuccess,
+  onError,
+  token,
+  method = 'POST'
+) {
   try {
     const response = await fetch(url, {
-      method: 'POST',
+      method,
       headers: {
         'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify(data),
     });
 
     const responseData = await response.json();
 
-    if (response.ok) {
-      console.log(responseData);
-      onSuccess(responseData); // call the onSuccess callback
+    if (responseData.error) {
+      onError(responseData);
     } else {
-      onFailure(responseData); // call the onFailure callback
+      onSuccess(responseData);
     }
   } catch (error) {
-    onFailure({ message: error.message || 'Network error' }); // call the onFailure callback
+    onError(error);
   }
-};
+}
+
 export default handleSubmit;

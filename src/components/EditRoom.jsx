@@ -1,18 +1,41 @@
-import React, { useState } from 'react';
-import handleSubmit from '../functions/handleSubmit';
 import { useNavigate } from 'react-router-dom';
-import ModalMessages from '../components/ModalMessages';
+import { useState } from 'react';
+import handleSubmit from '../functions/handleSubmit';
+import ModalMessages from './ModalMessages';
 
-export default function NewRoomPage() {
+export default function EditRoom({
+  room,
+  refetch,
+  setIsEditing,
+  setEditedRoom,
+  setIsRoomDataVisible,
+}) {
   const navigate = useNavigate();
   const token = localStorage.getItem('userToken'); // Get the token from local storage
 
   const [isModalOpen, setIsModalOpen] = useState(false); // control the visibility of the modal messages
   const [modalMessage, setModalMessage] = useState(''); // control the message displayed in the modal
 
-  const handleCreateRoom = (data) => {
+  // Get the data from Rooms page
+  const [name, setName] = useState(room.name);
+  const [monthlyRentalPrice, setMonthlyRentalPrice] = useState(
+    room.monthlyRentalPrice
+  );
+  const [description, setDescription] = useState(room.description);
+  const [content, setContent] = useState(room.content);
+
+  const handleUpdateRoom = () => {
+    const data = {};
+
+    // Check if input field has change
+    if (room.name !== name) data.name = name;
+    if (room.monthlyRentalPrice !== monthlyRentalPrice)
+      data.monthlyRentalPrice = monthlyRentalPrice;
+    if (room.description !== description) data.description = description;
+    if (room.content !== content) data.content = content;
+
     handleSubmit(
-      'https://sub-club-ce3cc207c2f9.herokuapp.com/rooms',
+      `https://sub-club-ce3cc207c2f9.herokuapp.com/rooms/${room._id}`,
       data,
       (responseData) => {
         setModalMessage(responseData.message); // set the message to display in the modal
@@ -20,45 +43,37 @@ export default function NewRoomPage() {
 
         // navigate to the rooms page after a delay
         setTimeout(() => {
-          navigate('/rooms', { state: { isNewRoomAdded: true } });
+          navigate('/rooms');
         }, 2000);
+        refetch(); // refetch the room data
+        setIsEditing(false); // hide the EditRoom component
+        setEditedRoom(null); // reset the edited room
+        setIsRoomDataVisible(true); // show the room data
       },
       // send messages with Modal if there is any error
       (errorData) => {
         setModalMessage(errorData.message);
         setIsModalOpen(true);
       },
-      token
+      token,
+      'PATCH'
     );
   };
+
   return (
     <div>
+      <h2 className='mt-10  text-left text-xl font-bold leading-9 tracking-tight text-lightPrimary'>
+        Update Room
+      </h2>
       <div className='flex flex-col '>
-        <div className='flex flex-col mt-2 m:mx-auto sm:w-full'>
-          <h2 className='mt-10  text-left text-xl font-bold leading-9 tracking-tight text-lightPrimary'>
-            Add new room
-          </h2>
-        </div>
         <div className='flex flex-col mt-10 sm:mx-auto sm:w-full mb-20'>
           <form
             className='space-y-6 w-full'
             action='#'
-            method='POST'
+            method='PATCH'
             onSubmit={(event) => {
               event.preventDefault();
-
-              const name = event.target.elements.name.value;
-              const monthlyRentalPrice =
-                event.target.elements.monthlyRentalPrice.value;
-              const description = event.target.elements.description.value;
-              const content = event.target.elements.content.value;
-
-              handleCreateRoom({
-                name,
-                monthlyRentalPrice,
-                description,
-                content,
-              });
+              handleUpdateRoom();
             }}
           >
             <div className='flex flex-wrap justify-between w-full'>
@@ -74,6 +89,8 @@ export default function NewRoomPage() {
                     autoComplete='name'
                     required
                     className='input-field'
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
                   />
                 </div>
               </div>
@@ -89,6 +106,8 @@ export default function NewRoomPage() {
                     autoComplete='monthlyRentalPrice'
                     required
                     className='input-field'
+                    value={monthlyRentalPrice}
+                    onChange={(e) => setMonthlyRentalPrice(e.target.value)}
                   />
                 </div>
               </div>
@@ -104,6 +123,8 @@ export default function NewRoomPage() {
                     autoComplete='description'
                     required
                     className='input-field'
+                    value={description}
+                    onChange={(e) => setDescription(e.target.value)}
                   />
                 </div>
               </div>
@@ -111,7 +132,7 @@ export default function NewRoomPage() {
                 <label htmlFor='content' className='label-field'>
                   What things come with the room?
                 </label>
-                <div className='mt-2'>
+                <div className='mt-2 list-disc list-inside h-10'>
                   <input
                     id='content'
                     name='content'
@@ -119,13 +140,15 @@ export default function NewRoomPage() {
                     autoComplete='content'
                     required
                     className='input-field'
+                    value={content}
+                    onChange={(e) => setContent(e.target.value)}
                   />
                 </div>
               </div>
             </div>
             <div className='flex justify-center align-middle '>
               <button type='submit' className='button w-1/2 justify-center'>
-                Create Room
+                Update
               </button>
             </div>
           </form>

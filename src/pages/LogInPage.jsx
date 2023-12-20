@@ -24,8 +24,12 @@ export default function LogInPage() {
         { email, password },
         { withCredentials: true }
       );
+
       // Set to true when the user logs in successfully
       setIsAuthenticated(true);
+
+      // Store the user token in localStorage
+      localStorage.setItem('userToken', response.data.token);
 
       // set the message to display in the modal
       setModalMessage(response.data.message);
@@ -36,8 +40,11 @@ export default function LogInPage() {
         navigate('/');
       }, 500);
     } catch (error) {
+      // extract the error message from the response
+      const errorMessage = error.response.data.message;
+
       // set the error message to display in the modal
-      setModalMessage(error.message);
+      setModalMessage(errorMessage);
       setIsModalOpen(true);
     }
   };
@@ -92,7 +99,7 @@ export default function LogInPage() {
                     type='email'
                     autoComplete='email'
                     required
-                    className='block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
+                    className='block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary sm:text-sm sm:leading-6'
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                   />
@@ -115,26 +122,16 @@ export default function LogInPage() {
                     type='password'
                     autoComplete='current-password'
                     required
-                    className='block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
+                    className='block w-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary sm:text-sm sm:leading-6'
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                   />
                 </div>
               </div>
-
-              <div className='text-sm text-center'>
-                <a
-                  href='#'
-                  className='font-semibold text-indigo-600 hover:text-indigo-500'
-                >
-                  Forgot password?
-                </a>
-              </div>
-
               <div>
                 <button
                   type='submit'
-                  className='flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600'
+                  className='flex justify-center align-middle w-full rounded-md bg-primary px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary'
                 >
                   Sign in
                 </button>
@@ -145,7 +142,7 @@ export default function LogInPage() {
               Don't have an account yet?
               <a
                 href='signup'
-                className='font-semibold leading-6 text-indigo-600 hover:text-indigo-500'
+                className='font-semibold leading-6 text-primary hover:text-indigo-500'
               >
                 {' '}
                 Sign Up for free

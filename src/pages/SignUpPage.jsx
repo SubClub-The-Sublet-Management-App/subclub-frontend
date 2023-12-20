@@ -1,4 +1,4 @@
-import { React, useState } from 'react';
+import React, { useState } from 'react';
 import logo from '../assets/images/sub-club-logo.svg';
 import handleSubmit from '../functions/handleSubmit';
 import { useNavigate } from 'react-router-dom';
@@ -7,16 +7,19 @@ import ModalMessages from '../components/ModalMessages';
 export default function SignUpPage() {
   const navigate = useNavigate();
 
-  const [isModalOpen, setIsModalOpen] = useState(false); // control the visibility of the modal
-  const [modalMessage, setModalMessage] = useState(''); // control the message displayed in the modal
+  // control the visibility of the modal
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  // control the message displayed in the modal
+  const [modalMessage, setModalMessage] = useState('');
 
   const handleSignUp = (data) => {
     handleSubmit(
       'https://sub-club-ce3cc207c2f9.herokuapp.com/auth/signup',
       data,
       (responseData) => {
-        setModalMessage(responseData.message); // set the message to display in the modal
-        setIsModalOpen(true); // open the modal
+        // set the message to display in the modal
+        setModalMessage(responseData.message);
+        setIsModalOpen(true);
 
         // navigate to the login page after a delay
         setTimeout(() => {
@@ -24,8 +27,9 @@ export default function SignUpPage() {
         }, 2000);
       },
       (errorData) => {
-        setModalMessage(errorData.message); // set the error message to display in the modal
-        setIsModalOpen(true); // open the modal
+        // set the error message to display in the modal
+        setModalMessage(errorData.message);
+        setIsModalOpen(true);
       }
     );
   };
@@ -94,7 +98,7 @@ export default function SignUpPage() {
                       type='firstName'
                       autoComplete='firstName'
                       required
-                      className='block w-full  border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
+                      className='block w-full  border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary sm:text-sm sm:leading-6'
                     />
                   </div>
                 </div>
@@ -112,7 +116,7 @@ export default function SignUpPage() {
                       type='lastName'
                       autoComplete='lastName'
                       required
-                      className='block w-full  border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
+                      className='block w-full  border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary sm:text-sm sm:leading-6'
                     />
                   </div>
                 </div>
@@ -131,7 +135,7 @@ export default function SignUpPage() {
                     type='email'
                     autoComplete='email'
                     required
-                    className='block w-full  border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
+                    className='block w-full  border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary sm:text-sm sm:leading-6'
                   />
                 </div>
               </div>
@@ -152,7 +156,7 @@ export default function SignUpPage() {
                     type='password'
                     autoComplete='current-password'
                     required
-                    className='block w-full  border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
+                    className='block w-full  border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary sm:text-sm sm:leading-6'
                   />
                 </div>
               </div>
@@ -165,7 +169,7 @@ export default function SignUpPage() {
               <div>
                 <button
                   type='submit'
-                  className='flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600'
+                  className='flex w-full justify-center rounded-md bg-primary px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary'
                 >
                   Sign in
                 </button>
@@ -176,7 +180,7 @@ export default function SignUpPage() {
               Already have an account?
               <a
                 href='login'
-                className='font-semibold leading-6 text-indigo-600 hover:text-indigo-500'
+                className='font-semibold leading-6 text-primary hover:text-indigo-500'
               >
                 {' '}
                 Log In
