@@ -1,7 +1,14 @@
-async function handleSubmit(url, data, onSuccess, onError, token) {
+async function handleSubmit(
+  url,
+  data,
+  onSuccess,
+  onError,
+  token,
+  method = 'POST'
+) {
   try {
     const response = await fetch(url, {
-      method: 'POST',
+      method,
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${token}`,
