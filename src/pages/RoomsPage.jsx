@@ -1,26 +1,39 @@
-import { useLocation, Outlet, useMatch, useNavigate } from 'react-router-dom';
+import { useLocation, Outlet, useNavigate } from 'react-router-dom';
 import useFetch from '../functions/useFetch';
-import { AiOutlinePlus } from 'react-icons/ai';
+import { AiOutlinePlus, AiOutlineEdit } from 'react-icons/ai';
+import { useState } from 'react';
+import EditRoom from '../components/EditRoom'; // import the EditRoom component
 
 export default function RoomsPage() {
+  // Get location to navigate to "add-room" page
   const location = useLocation();
   const navigate = useNavigate();
+
+  const [setIsRoomDataVisible] = useState(true);
+
+  // Set the state for edit room
+  const [isEditing, setIsEditing] = useState(false);
+  const [editedRoom, setEditedRoom] = useState(null);
 
   // Fetch data from the backend
   const { data, error, isLoading, refetch } = useFetch(
     'https://sub-club-ce3cc207c2f9.herokuapp.com/rooms'
   );
 
+  // Loading handling
   if (isLoading) return <div>Loading...</div>;
+  // Error handling
   if (error) return <div>Error: {error}</div>;
 
   return (
     <div>
-      <h1 className='text-left text-3xl font-bold leading-9 tracking-tight text-gray-900'>
+      <h1 className='m-2 py-2 text-left text-3xl font-bold leading-9 tracking-tight text-gray-900 border-b-2 border-gray-300'>
         Rooms
       </h1>
       {location.pathname !== '/rooms/add-room' ? (
         <>
+          {/* Button to navigate to add rooms page */}
+
           <div className='flex justify-end w-full'>
             <button
               className='button items-center'
@@ -30,36 +43,57 @@ export default function RoomsPage() {
               Add Room
             </button>
           </div>
-          {data &&
-            data.data.map((room) => (
-              <div
-                className=' bg-white p-6 rounded-lg shadow-lg m-8'
-                key={room.id}
-              >
-                <div className='flex flex-col sm:flex-row justify-between w-full p-2'>
-                  <h2 className='text-md font-bold text-primary uppercase'>
-                    {room.name}
-                  </h2>
-                  <h2 className='text-md font-bold text-lightPrimary'>
-                    $ {room.monthlyRentalPrice} AUD
-                  </h2>
-                </div>
-
-                <p className='p-2 text-sm font-light text-gray-600'>
-                  {room.description}
-                </p>
-                <div className='p-2' key={room.id}>
-                  <p className='pb-4 text-sm font-semibold  text-gray-600'>
-                    What this place offers:
+          {/* Display room: name, rental price, description and content */}
+          {data.data.map((room) => (
+            <div
+              className=' bg-white p-6 rounded-lg shadow-lg m-8'
+              key={room._id}
+            >
+              {isEditing && editedRoom === room ? (
+                <EditRoom
+                  room={editedRoom}
+                  refetch={refetch}
+                  setIsEditing={setIsEditing}
+                  setEditedRoom={setEditedRoom}
+                  setIsRoomDataVisible={setIsRoomDataVisible}
+                />
+              ) : (
+                <>
+                  <div className='flex flex-col sm:flex-row justify-between w-full p-2'>
+                    <h2 className='text-md font-bold text-primary uppercase'>
+                      {room.name}
+                    </h2>
+                    <h2 className='text-md font-bold text-lightPrimary'>
+                      $ {room.monthlyRentalPrice} AUD
+                    </h2>
+                  </div>
+                  <p className='p-2 text-sm font-light text-gray-600'>
+                    {room.description}
                   </p>
-                  <ul className='list-disc list-inside text-sm font-light text-gray-600'>
-                    {room.content.map((item, index) => (
-                      <li key={index}>{item}</li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
-            ))}
+                  <div className='p-2' key={room.id}>
+                    <p className='pb-4 text-sm font-semibold  text-gray-600'>
+                      What this place offers:
+                    </p>
+                    <ul className='list-disc list-inside text-sm font-light text-gray-600'>
+                      {room.content.map((item, index) => (
+                        <li key={index}>{item}</li>
+                      ))}
+                    </ul>
+                  </div>
+                  <button
+                    onClick={() => {
+                      setIsEditing(true);
+                      setEditedRoom(room);
+                      setIsRoomDataVisible(false); // hide the room data
+                    }}
+                    className='w-full flex justify-end'
+                  >
+                    <AiOutlineEdit className='text-lightPrimary w-6 h-6' />
+                  </button>
+                </>
+              )}
+            </div>
+          ))}
         </>
       ) : (
         <Outlet />
