@@ -2,7 +2,7 @@ import { useLocation, Outlet, useNavigate } from 'react-router-dom';
 import useFetch from '../functions/useFetch';
 import { AiOutlinePlus, AiOutlineEdit } from 'react-icons/ai';
 import { useState, useEffect } from 'react';
-import EditRoom from '../components/EditRoom'; 
+import EditRoom from '../components/EditRoom';
 import DeleteRoom from '../components/DeleteRoom';
 import { ClipLoader } from 'react-spinners';
 
@@ -11,7 +11,12 @@ export default function RoomsPage() {
   const location = useLocation();
   const navigate = useNavigate();
   const [isNewRoomAdded, setIsNewRoomAdded] = useState(false);
-  const { data: rooms, isLoading, error, refetch } = useFetch('https://sub-club-ce3cc207c2f9.herokuapp.com/rooms');
+  const {
+    data: rooms,
+    isLoading,
+    error,
+    refetch,
+  } = useFetch('https://sub-club-ce3cc207c2f9.herokuapp.com/rooms');
 
   useEffect(() => {
     if (location.state?.isNewRoomAdded) {
@@ -25,7 +30,7 @@ export default function RoomsPage() {
       setIsNewRoomAdded(false);
     }
   }, [isNewRoomAdded, refetch]);
-  
+
   // To hide data from the get request when rooms is being updating
   const [isRoomDataVisible, setIsRoomDataVisible] = useState(true);
 
@@ -36,8 +41,15 @@ export default function RoomsPage() {
   // Loading handling
   if (isLoading) {
     return (
-      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
-        <ClipLoader color="#8F82F8" size={150} />
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          height: '100vh',
+        }}
+      >
+        <ClipLoader color='#8F82F8' size={150} />
       </div>
     );
   }
@@ -100,19 +112,17 @@ export default function RoomsPage() {
                     </ul>
                   </div>
                   <div className='w-full flex justify-end'>
-                  <button
-                    onClick={() => {
-                      setIsEditing(true);
-                      setEditedRoom(room);
-                      setIsRoomDataVisible(false);
-                    }}
-                  >
-                    <AiOutlineEdit className='text-lightPrimary w-6 h-6 mb-2' />
-                  </button>
-                  <DeleteRoom id={room._id} refetch={refetch}  />
-
+                    <button
+                      onClick={() => {
+                        setIsEditing(true);
+                        setEditedRoom(room);
+                        setIsRoomDataVisible(false);
+                      }}
+                    >
+                      <AiOutlineEdit className='text-lightPrimary w-6 h-6 mb-2' />
+                    </button>
+                    <DeleteRoom id={room._id} refetch={refetch} />
                   </div>
-
                 </>
               )}
             </div>
