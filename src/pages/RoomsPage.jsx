@@ -75,60 +75,61 @@ export default function RoomsPage() {
             </button>
           </div>
           {/* Display room: name, rental price, description and content */}
-          {rooms.data.map((room) => (
-             isRoomDataVisible || (isEditing && editedRoom === room) ? (
-            <div
-              className=' bg-gray-100 p-6 rounded-lg shadow-lg m-8'
-              key={room._id}
-            >
-              {isEditing && editedRoom === room ? (
-                <EditRoom
-                  room={editedRoom}
-                  refetch={refetch}
-                  setIsEditing={setIsEditing}
-                  setEditedRoom={setEditedRoom}
-                  setIsRoomDataVisible={setIsRoomDataVisible}
-                />
-              ) : (
-                <>
-                  <div className='flex flex-col sm:flex-row justify-between w-full p-2'>
-                    <h2 className='text-md font-bold text-primary uppercase'>
-                      {room.name}
-                    </h2>
-                    <h2 className='text-md font-bold text-lightPrimary'>
-                      $ {room.monthlyRentalPrice} AUD
-                    </h2>
-                  </div>
-                  <p className='p-2 text-sm font-light text-gray-600'>
-                    {room.description}
-                  </p>
-                  <div className='p-2' key={room.id}>
-                    <p className='pb-4 text-sm font-semibold  text-gray-600'>
-                      What this place offers:
+          {rooms.data.map((room) =>
+            isRoomDataVisible || (isEditing && editedRoom === room) ? (
+              <div
+                className=' bg-gray-100 p-6 rounded-lg shadow-lg m-8'
+                key={room._id}
+              >
+                {isEditing && editedRoom === room ? (
+                  <EditRoom
+                    room={editedRoom}
+                    refetch={refetch}
+                    setIsEditing={setIsEditing}
+                    setEditedRoom={setEditedRoom}
+                    setIsRoomDataVisible={setIsRoomDataVisible}
+                  />
+                ) : (
+                  <>
+                    <div className='flex flex-col sm:flex-row justify-between w-full p-2'>
+                      <h2 className='text-md font-bold text-primary uppercase'>
+                        {room.name}
+                      </h2>
+                      <h2 className='text-md font-bold text-lightPrimary'>
+                        $ {room.monthlyRentalPrice} AUD{' '}
+                        <span className='text-sm font-light'> / month</span>
+                      </h2>
+                    </div>
+                    <p className='p-2 text-sm font-light text-gray-600'>
+                      {room.description}
                     </p>
-                    <ul className='list-disc list-inside text-sm font-light text-gray-600'>
-                      {room.content.map((item, index) => (
-                        <li key={index}>{item}</li>
-                      ))}
-                    </ul>
-                  </div>
-                  <div className='w-full flex justify-end'>
-                    <button
-                      onClick={() => {
-                        setIsEditing(true);
-                        setEditedRoom(room);
-                        setIsRoomDataVisible(false);
-                      }}
-                    >
-                      <AiOutlineEdit className='text-lightPrimary w-6 h-6 mb-2' />
-                    </button>
-                    <DeleteRoom id={room._id} refetch={refetch} />
-                  </div>
-                </>
-              )}
-            </div>
-             ) : null
-          ))}
+                    <div className='p-2' key={room.id}>
+                      <p className='pb-4 text-sm font-semibold  text-gray-600'>
+                        What this place offers:
+                      </p>
+                      <ul className='list-disc list-inside text-sm font-light text-gray-600'>
+                        {room.content.map((item, index) => (
+                          <li key={index}>{item}</li>
+                        ))}
+                      </ul>
+                    </div>
+                    <div className='w-full flex justify-end'>
+                      <button
+                        onClick={() => {
+                          setIsEditing(true);
+                          setEditedRoom(room);
+                          setIsRoomDataVisible(false);
+                        }}
+                      >
+                        <AiOutlineEdit className='text-lightPrimary w-6 h-6 mb-2' />
+                      </button>
+                      <DeleteRoom id={room._id} refetch={refetch} />
+                    </div>
+                  </>
+                )}
+              </div>
+            ) : null
+          )}
         </>
       ) : (
         <Outlet />

@@ -1,88 +1,173 @@
-import React, { useState } from 'react';
-import handleSubmit from '../functions/handleSubmit';
 import { useNavigate } from 'react-router-dom';
-import ModalMessages from '../components/ModalMessages';
+import { useState } from 'react';
+import handleSubmit from '../functions/handleSubmit';
+import ModalMessages from './ModalMessages';
+import formatDob from '../functions/formatDOB';
 
-export default function NewOccupantPage() {
+export default function EditOccupant({
+  occupant,
+  refetch,
+  setIsEditing,
+  setEditedOccupant,
+  setIsOccupantDataVisible,
+}) {
+  // To navigate back to the '/occupants' page
   const navigate = useNavigate();
-  const token = localStorage.getItem('userToken'); // Get the token from local storage
 
-  const [isModalOpen, setIsModalOpen] = useState(false); // control the visibility of the modal messages
-  const [modalMessage, setModalMessage] = useState(''); // control the message displayed in the modal
+  // Get user auth to send patch request
+  const token = localStorage.getItem('userToken');
 
-  const handleCreateRoom = (data) => {
+  // To handle successfull and error messages to user
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalMessage, setModalMessage] = useState('');
+
+  // Get the data from occupants page
+  const [firstName, setFirstName] = useState(occupant.firstName);
+  const [lastName, setLastName] = useState(occupant.lastName);
+  const [phoneNumber, setPhoneNumber] = useState(occupant.phoneNumber);
+  const [email, setEmail] = useState(occupant.email);
+  const [dob, setDob] = useState(occupant.dob ? formatDob(occupant.dob) : '');
+  const [occupation, setOccupation] = useState(occupant.occupation);
+  const [emergencyContactFirstName, setEmergencyContactFirstName] = useState(
+    occupant.emergencyContact.firstName
+  );
+  const [emergencyContactLastName, setEmergencyContactLastName] = useState(
+    occupant.emergencyContact.lastName
+  );
+  const [emergencyContactPhoneNumber, setEmergencyContactPhoneNumber] =
+    useState(occupant.emergencyContact.phoneNumber);
+  const [emergencyContactRelationship, setEmergencyContactRelationship] =
+    useState(occupant.emergencyContact.relationship);
+  const [emergencyContactEmail, setEmergencyContactEmail] = useState(
+    occupant.emergencyContact.email
+  );
+  const [referenceFirstName, setReferenceFirstName] = useState(
+    occupant.reference.firstName
+  );
+  const [referenceLastName, setReferenceLastName] = useState(
+    occupant.reference.lastName
+  );
+  const [referencePhoneNumber, setReferencePhoneNumber] = useState(
+    occupant.reference.phoneNumber
+  );
+  const [referenceRelationship, setReferenceRelationship] = useState(
+    occupant.reference.relationship
+  );
+  const [referenceEmail, setReferenceEmail] = useState(
+    occupant.reference.email
+  );
+
+  // Check if input field has change otherwise keep current information
+  const handleUpdateOccupant = () => {
+    const data = {
+      firstName: firstName,
+      lastName: lastName,
+      phoneNumber: phoneNumber,
+      email: email,
+      dob: dob,
+      occupation: occupation,
+      emergencyContact: {
+        firstName: emergencyContactFirstName,
+        lastName: emergencyContactLastName,
+        relationship: emergencyContactRelationship,
+        phoneNumber: emergencyContactPhoneNumber,
+        email: emergencyContactEmail,
+      },
+      reference: {
+        firstName: referenceFirstName,
+        lastName: referenceLastName,
+        relationship: referenceRelationship,
+        phoneNumber: referencePhoneNumber,
+        email: referenceEmail,
+      },
+    };
+    if (
+      occupant.firstName !== firstName ||
+      occupant.lastName !== lastName ||
+      occupant.phoneNumber !== phoneNumber ||
+      occupant.email !== email ||
+      occupant.dob !== dob ||
+      occupant.occupation !== occupation
+    ) {
+      data.firstName = firstName;
+      data.lastName = lastName;
+      data.phoneNumber = phoneNumber;
+      data.email = email;
+      data.dob = dob;
+      data.occupation = occupation;
+    }
+
+    if (
+      occupant.emergencyContact.firstName !== emergencyContactFirstName ||
+      occupant.emergencyContact.lastName !== emergencyContactLastName ||
+      occupant.emergencyContact.relationship !== emergencyContactRelationship ||
+      occupant.emergencyContact.phoneNumber !== emergencyContactPhoneNumber ||
+      occupant.emergencyContact.email !== emergencyContactEmail
+    ) {
+      data.emergencyContact = {
+        firstName: emergencyContactFirstName,
+        lastName: emergencyContactLastName,
+        relationship: emergencyContactRelationship,
+        phoneNumber: emergencyContactPhoneNumber,
+        email: emergencyContactEmail,
+      };
+    }
+
+    if (
+      occupant.reference.firstName !== referenceFirstName ||
+      occupant.reference.lastName !== referenceLastName ||
+      occupant.reference.relationship !== referenceRelationship ||
+      occupant.reference.phoneNumber !== referencePhoneNumber ||
+      occupant.reference.email !== referenceEmail
+    ) {
+      data.reference = {
+        firstName: referenceFirstName,
+        lastName: referenceLastName,
+        relationship: referenceRelationship,
+        phoneNumber: referencePhoneNumber,
+        email: referenceEmail,
+      };
+    }
+
     handleSubmit(
-      'https://sub-club-ce3cc207c2f9.herokuapp.com/occupants',
+      `https://sub-club-ce3cc207c2f9.herokuapp.com/occupants/${occupant._id}`,
       data,
       (responseData) => {
-        setModalMessage(responseData.message); // set the message to display in the modal
-        setIsModalOpen(true); // open the modal
-
-        // navigate to the rooms page after a delay
+        setModalMessage(responseData.message);
+        setIsModalOpen(true);
+        // navigate to the occupants page after a delay
         setTimeout(() => {
-          navigate('/occupants', { state: { isNewOccupantAdded: true } });
+          navigate('/occupants');
         }, 2000);
+        refetch(); // refetch the occupant data
+        setIsEditing(false); // hide the Editoccupant component
+        setEditedOccupant(null); // reset the edited occupant
+        setIsOccupantDataVisible(true); // show the occupant data
       },
       // send messages with Modal if there is any error
       (errorData) => {
         setModalMessage(errorData.message);
         setIsModalOpen(true);
       },
-      token
+      token,
+      'PATCH'
     );
   };
+
   return (
     <div>
+      <h2 className='mt-10  text-left text-xl font-bold leading-9 tracking-tight text-lightPrimary'>
+        Update occupant
+      </h2>
       <div className='flex flex-col '>
-        <div className='flex flex-col mt-2 m:mx-auto sm:w-full'>
-          <h2 className='mt-10  text-left text-xl font-bold leading-9 tracking-tight text-lightPrimary'>
-            Add new occupant
-          </h2>
-        </div>
         <div className='flex flex-col mt-10 sm:mx-auto sm:w-full mb-20'>
           <form
             className='space-y-6 w-full'
             action='#'
-            method='POST'
+            method='PATCH'
             onSubmit={(event) => {
               event.preventDefault();
-
-              const firstName = event.target.elements.firstName.value;
-              const lastName = event.target.elements.lastName.value;
-              const phoneNumber = event.target.elements.phoneNumber.value;
-              const email = event.target.elements.email.value;
-              const dob = event.target.elements.dob.value;
-              const occupation = event.target.elements.occupation.value;
-
-              const emergencyContact = {
-                firstName:
-                  event.target.elements.emergencyContactFirstName.value,
-                lastName: event.target.elements.emergencyContactLastName.value,
-                phoneNumber:
-                  event.target.elements.emergencyContactPhoneNumber.value,
-                relationship:
-                  event.target.elements.emergencyContactRelationship.value,
-                email: event.target.elements.emergencyContactEmail.value,
-              };
-
-              const reference = {
-                firstName: event.target.elements.referenceFirstName.value,
-                lastName: event.target.elements.referenceLastName.value,
-                phoneNumber: event.target.elements.referencePhoneNumber.value,
-                relationship: event.target.elements.referenceRelationship.value,
-                email: event.target.elements.referenceEmail.value,
-              };
-
-              handleCreateRoom({
-                firstName,
-                lastName,
-                phoneNumber,
-                email,
-                dob,
-                occupation,
-                emergencyContact,
-                reference,
-              });
+              handleUpdateOccupant();
             }}
           >
             <div className='flex flex-wrap justify-between w-full'>
@@ -98,6 +183,8 @@ export default function NewOccupantPage() {
                     autoComplete='firstName'
                     required
                     className='input-field'
+                    value={firstName}
+                    onChange={(e) => setFirstName(e.target.value)}
                   />
                 </div>
               </div>
@@ -113,6 +200,8 @@ export default function NewOccupantPage() {
                     autoComplete='lastName'
                     required
                     className='input-field'
+                    value={lastName}
+                    onChange={(e) => setLastName(e.target.value)}
                   />
                 </div>
               </div>
@@ -128,6 +217,8 @@ export default function NewOccupantPage() {
                     autoComplete='dob'
                     required
                     className='input-field'
+                    value={dob}
+                    onChange={(e) => setDob(e.target.value)}
                   />
                 </div>
               </div>
@@ -143,6 +234,8 @@ export default function NewOccupantPage() {
                     autoComplete='email'
                     required
                     className='input-field'
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
                   />
                 </div>
               </div>
@@ -158,6 +251,8 @@ export default function NewOccupantPage() {
                     autoComplete='phoneNumber'
                     required
                     className='input-field'
+                    value={phoneNumber}
+                    onChange={(e) => setPhoneNumber(e.target.value)}
                   />
                 </div>
               </div>
@@ -173,10 +268,12 @@ export default function NewOccupantPage() {
                     autoComplete='occupation'
                     required
                     className='input-field'
+                    value={occupation}
+                    onChange={(e) => setOccupation(e.target.value)}
                   />
                 </div>
               </div>
-              <h3 className='w-full mt-10  text-left text-lg font-bold leading-9 tracking-tight text-lightPrimary'>
+              <h3 className='mt-10 w-full text-left text-lg font-bold leading-9 tracking-tight text-lightPrimary'>
                 Emergency Contact
               </h3>
               <div className='w-full sm:w-1/2 p-2'>
@@ -194,6 +291,10 @@ export default function NewOccupantPage() {
                     autoComplete='emergencyContactFirstName'
                     required
                     className='input-field'
+                    value={emergencyContactFirstName}
+                    onChange={(e) =>
+                      setEmergencyContactFirstName(e.target.value)
+                    }
                   />
                 </div>
               </div>
@@ -202,7 +303,7 @@ export default function NewOccupantPage() {
                   htmlFor='emergencyContactLastName'
                   className='label-field'
                 >
-                  Last Name
+                  First Name
                 </label>
                 <div className='mt-2'>
                   <input
@@ -212,6 +313,10 @@ export default function NewOccupantPage() {
                     autoComplete='emergencyContactLastName'
                     required
                     className='input-field'
+                    value={emergencyContactLastName}
+                    onChange={(e) =>
+                      setEmergencyContactLastName(e.target.value)
+                    }
                   />
                 </div>
               </div>
@@ -227,6 +332,8 @@ export default function NewOccupantPage() {
                     autoComplete='emergencyContactEmail'
                     required
                     className='input-field'
+                    value={emergencyContactEmail}
+                    onChange={(e) => setEmergencyContactEmail(e.target.value)}
                   />
                 </div>
               </div>
@@ -245,6 +352,10 @@ export default function NewOccupantPage() {
                     autoComplete='emergencyContactPhoneNumber'
                     required
                     className='input-field'
+                    value={emergencyContactPhoneNumber}
+                    onChange={(e) =>
+                      setEmergencyContactPhoneNumber(e.target.value)
+                    }
                   />
                 </div>
               </div>
@@ -263,11 +374,14 @@ export default function NewOccupantPage() {
                     autoComplete='emergencyContactRelationship'
                     required
                     className='input-field'
+                    value={emergencyContactRelationship}
+                    onChange={(e) =>
+                      setEmergencyContactRelationship(e.target.value)
+                    }
                   />
                 </div>
               </div>
-
-              <h3 className=' w-full mt-10  text-left text-lg font-bold leading-9 tracking-tight text-lightPrimary'>
+              <h3 className='mt-10 w-full text-left text-lg font-bold leading-9 tracking-tight text-lightPrimary'>
                 Reference
               </h3>
               <div className='w-full sm:w-1/2 p-2'>
@@ -282,12 +396,14 @@ export default function NewOccupantPage() {
                     autoComplete='referenceFirstName'
                     required
                     className='input-field'
+                    value={referenceFirstName}
+                    onChange={(e) => setReferenceFirstName(e.target.value)}
                   />
                 </div>
               </div>
               <div className='w-full sm:w-1/2 p-2'>
                 <label htmlFor='referenceLastName' className='label-field'>
-                  Last Name
+                  First Name
                 </label>
                 <div className='mt-2'>
                   <input
@@ -297,6 +413,8 @@ export default function NewOccupantPage() {
                     autoComplete='referenceLastName'
                     required
                     className='input-field'
+                    value={referenceLastName}
+                    onChange={(e) => setReferenceLastName(e.target.value)}
                   />
                 </div>
               </div>
@@ -312,6 +430,8 @@ export default function NewOccupantPage() {
                     autoComplete='referenceEmail'
                     required
                     className='input-field'
+                    value={referenceEmail}
+                    onChange={(e) => setReferenceEmail(e.target.value)}
                   />
                 </div>
               </div>
@@ -327,6 +447,8 @@ export default function NewOccupantPage() {
                     autoComplete='referencePhoneNumber'
                     required
                     className='input-field'
+                    value={referencePhoneNumber}
+                    onChange={(e) => setReferencePhoneNumber(e.target.value)}
                   />
                 </div>
               </div>
@@ -342,13 +464,15 @@ export default function NewOccupantPage() {
                     autoComplete='referenceRelationship'
                     required
                     className='input-field'
+                    value={referenceRelationship}
+                    onChange={(e) => setReferenceRelationship(e.target.value)}
                   />
                 </div>
               </div>
             </div>
-            <div className='flex w-full justify-center align-middle '>
+            <div className='flex justify-center align-middle '>
               <button type='submit' className='button w-1/2 justify-center'>
-                Create Occupant
+                Update
               </button>
             </div>
           </form>

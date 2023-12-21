@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext, useCallback } from 'react'; 
+import { useState, useEffect, useContext, useCallback } from 'react';
 import { AuthContext } from '../components/AuthContext';
 
 export default function useFetch(url) {
@@ -7,7 +7,7 @@ export default function useFetch(url) {
   const [isLoading, setIsLoading] = useState(true);
   const { isAuthenticated } = useContext(AuthContext);
 
-  const fetchData = useCallback(async () => { 
+  const fetchData = useCallback(async () => {
     setIsLoading(true);
     if (isAuthenticated) {
       const token = localStorage.getItem('userToken');
@@ -29,11 +29,11 @@ export default function useFetch(url) {
       }
     }
     setIsLoading(false);
-  }, [isAuthenticated, url]); 
+  }, [isAuthenticated, url]);
 
   useEffect(() => {
     fetchData();
-  }, [fetchData]); 
+  }, [fetchData]);
 
   return { data, error, isLoading, refetch: fetchData };
 }

@@ -3,8 +3,7 @@ import ModalMessages from './ModalMessages';
 import { FaTrash } from 'react-icons/fa';
 import { ClipLoader } from 'react-spinners';
 
-export default function DeleteRoom({ id, refetch }) {
-  // include token as a prop
+export default function DeleteOccupant({ id, refetch }) {
   const [isLoading, setIsLoading] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalMessage, setModalMessage] = useState('');
@@ -14,7 +13,7 @@ export default function DeleteRoom({ id, refetch }) {
     setIsLoading(true);
     try {
       const response = await fetch(
-        `https://sub-club-ce3cc207c2f9.herokuapp.com/rooms/${id}`,
+        `https://sub-club-ce3cc207c2f9.herokuapp.com/occupants/${id}`,
         {
           method: 'DELETE',
           headers: {
@@ -24,9 +23,9 @@ export default function DeleteRoom({ id, refetch }) {
         }
       );
       if (!response.ok) {
-        throw new Error('Failed to delete room');
+        throw new Error('Failed to delete occupant');
       }
-      setModalMessage('Room deleted successfully');
+      setModalMessage('Occupant deleted successfully');
       setIsModalOpen(true);
       refetch();
     } catch (error) {
@@ -38,12 +37,12 @@ export default function DeleteRoom({ id, refetch }) {
   };
 
   return (
-    <div className='mx-4'>
+    <div className='flex align-middle justify-center'>
       <button onClick={handleDelete} disabled={isLoading}>
         {isLoading ? (
-          <ClipLoader color='#7E49F2' size={15} />
+          <ClipLoader color='#7E49F2' size={18} />
         ) : (
-          <FaTrash className='text-lightPrimary h-6 align-middle self-center m-0' />
+          <FaTrash className='text-lightPrimary h-6 w-auto align-middle self-center m-0' />
         )}
       </button>
       <ModalMessages
