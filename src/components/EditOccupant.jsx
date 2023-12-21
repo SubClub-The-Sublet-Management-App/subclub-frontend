@@ -2,6 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import handleSubmit from '../functions/handleSubmit';
 import ModalMessages from './ModalMessages';
+import formatDob from '../functions/formatDOB';
 
 export default function EditOccupant({
   occupant,
@@ -14,18 +15,18 @@ export default function EditOccupant({
   const navigate = useNavigate();
 
   // Get user auth to send patch request
-  const token = localStorage.getItem('userToken'); 
+  const token = localStorage.getItem('userToken');
 
   // To handle successfull and error messages to user
-  const [isModalOpen, setIsModalOpen] = useState(false); 
-  const [modalMessage, setModalMessage] = useState(''); 
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalMessage, setModalMessage] = useState('');
 
   // Get the data from occupants page
   const [firstName, setFirstName] = useState(occupant.firstName);
   const [lastName, setLastName] = useState(occupant.lastName);
   const [phoneNumber, setPhoneNumber] = useState(occupant.phoneNumber);
   const [email, setEmail] = useState(occupant.email);
-  const [dob, setDob] = useState(occupant.dob);
+  const [dob, setDob] = useState(occupant.dob ? formatDob(occupant.dob) : '');
   const [occupation, setOccupation] = useState(occupant.occupation);
   const [emergencyContactFirstName, setEmergencyContactFirstName] = useState(
     occupant.emergencyContact.firstName
@@ -56,10 +57,46 @@ export default function EditOccupant({
     occupant.reference.email
   );
 
+  // Check if input field has change otherwise keep current information
   const handleUpdateOccupant = () => {
-    const data = {};
+    const data = {
+      firstName: firstName,
+      lastName: lastName,
+      phoneNumber: phoneNumber,
+      email: email,
+      dob: dob,
+      occupation: occupation,
+      emergencyContact: {
+        firstName: emergencyContactFirstName,
+        lastName: emergencyContactLastName,
+        relationship: emergencyContactRelationship,
+        phoneNumber: emergencyContactPhoneNumber,
+        email: emergencyContactEmail,
+      },
+      reference: {
+        firstName: referenceFirstName,
+        lastName: referenceLastName,
+        relationship: referenceRelationship,
+        phoneNumber: referencePhoneNumber,
+        email: referenceEmail,
+      },
+    };
+    if (
+      occupant.firstName !== firstName ||
+      occupant.lastName !== lastName ||
+      occupant.phoneNumber !== phoneNumber ||
+      occupant.email !== email ||
+      occupant.dob !== dob ||
+      occupant.occupation !== occupation
+    ) {
+      data.firstName = firstName;
+      data.lastName = lastName;
+      data.phoneNumber = phoneNumber;
+      data.email = email;
+      data.dob = dob;
+      data.occupation = occupation;
+    }
 
-    // Check if input field has change otherwise keep current information
     if (
       occupant.emergencyContact.firstName !== emergencyContactFirstName ||
       occupant.emergencyContact.lastName !== emergencyContactLastName ||
@@ -96,8 +133,8 @@ export default function EditOccupant({
       `https://sub-club-ce3cc207c2f9.herokuapp.com/occupants/${occupant._id}`,
       data,
       (responseData) => {
-        setModalMessage(responseData.message); 
-        setIsModalOpen(true); 
+        setModalMessage(responseData.message);
+        setIsModalOpen(true);
         // navigate to the occupants page after a delay
         setTimeout(() => {
           navigate('/occupants');
