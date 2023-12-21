@@ -37,12 +37,12 @@ export default function DeleteOccupant({ id, refetch }) {
   };
 
   return (
-    <div className='mx-4'>
+    <div className='flex align-middle justify-center'>
       <button onClick={handleDelete} disabled={isLoading}>
         {isLoading ? (
-          <ClipLoader color='#7E49F2' size={15} />
+          <ClipLoader color='#7E49F2' size={18} />
         ) : (
-          <FaTrash className='text-lightPrimary h-6 align-middle self-center m-0' />
+          <FaTrash className='text-lightPrimary h-6 w-auto align-middle self-center m-0' />
         )}
       </button>
       <ModalMessages
