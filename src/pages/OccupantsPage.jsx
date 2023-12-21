@@ -108,7 +108,7 @@ export default function OccupantsPage() {
                     />
                   ) : (
                     <>
-                    {/* Handle the view of the card show occupant personal information when click the "Profile" button  */}
+                      {/* Handle the view of the card show occupant personal information when click the "Profile" button  */}
                       {views[occupant._id] === 'personal' && (
                         <div className='p-8 w-300 h-400'>
                           <div className='w-full flex justify-between align-middle'>
@@ -149,8 +149,10 @@ export default function OccupantsPage() {
                           <p className='text-sm font-normal  text-lightSecondary mt-4 my-2'>
                             email:
                           </p>
-                          <p className='text-md font-bold text-lightSecondary'>
-                            {occupant.email}
+                          <p className='text-md font-bold text-lightSecondary hover:text-primary'>
+                            <a href={`mailto:${occupant.email}`}>
+                              {occupant.email}
+                            </a>
                           </p>
                         </div>
                       )}
@@ -168,8 +170,12 @@ export default function OccupantsPage() {
                             <p className='text-sm mt-2'>
                               {occupant.emergencyContact.phoneNumber}
                             </p>
-                            <p className='text-sm mt-2'>
-                              {occupant.emergencyContact.email}
+                            <p className='text-sm mt-2  hover:text-primary hover:font-bold'>
+                              <a
+                                href={`mailto:${occupant.emergencyContact.email}`}
+                              >
+                                {occupant.emergencyContact.email}
+                              </a>
                             </p>
                             <p className='text-sm mt-2'>
                               {occupant.emergencyContact.relationship}
@@ -186,8 +192,10 @@ export default function OccupantsPage() {
                             <p className='text-sm mt-2 '>
                               {occupant.reference.phoneNumber}
                             </p>
-                            <p className='text-sm mt-2'>
-                              {occupant.reference.email}
+                            <p className='text-sm mt-2  hover:text-primary hover:font-bold'>
+                              <a href={`mailto:${occupant.reference.email}`}>
+                                {occupant.reference.email}
+                              </a>
                             </p>
                             <p className='text-sm mt-2'>
                               {occupant.reference.relationship}
@@ -217,8 +225,8 @@ export default function OccupantsPage() {
                           </button>
                         </div>
                         {/* Component to handle the deletion of the occupant */}
-                        <div  className='mx-4 flex justify-center h-12 w-12'>
-                           <DeleteOccupant id={occupant._id} refetch={refetch} />
+                        <div className='mx-4 flex justify-center h-12 w-12'>
+                          <DeleteOccupant id={occupant._id} refetch={refetch} />
                         </div>
                       </div>
                     </>
