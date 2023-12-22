@@ -1,4 +1,4 @@
-// Helper function to format the date
+// Helper function to format the date of birth
 function formatDob(dob) {
   const date = new Date(dob);
   const year = date.getFullYear();
