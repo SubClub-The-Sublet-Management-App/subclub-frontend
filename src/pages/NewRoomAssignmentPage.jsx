@@ -50,7 +50,6 @@ export default function RoomAssignmentPage() {
         setIsModalOpen(true);
 
         // navigate to the rooms page after a delay only if the request was successful
-        // navigate to the rooms page after a delay
         setTimeout(() => {
           navigate('/room-assignments', {
             state: { isNewRoomAssignmentAdded: true },
@@ -64,6 +63,7 @@ export default function RoomAssignmentPage() {
       },
       token
     );
+    
   };
   return (
     <div>
@@ -84,7 +84,7 @@ export default function RoomAssignmentPage() {
             onSubmit={(event) => {
               event.preventDefault();
 
-              const room = selectedRoom._id;
+              const room = selectedRoom;
               const occupant = selectedOccupant._id;
               const startDate = event.target.elements.startDate.value;
               const endDate = event.target.elements.endDate.value;
