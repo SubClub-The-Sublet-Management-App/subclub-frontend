@@ -7,10 +7,18 @@ import DeleteRoom from '../components/DeleteRoom';
 import { ClipLoader } from 'react-spinners';
 
 export default function RoomsPage() {
-  // Get location to navigate to "add-room" page
+  // Get location to navigate to "/add-room" page
   const location = useLocation();
   const navigate = useNavigate();
-  const [isNewRoomAdded, setIsNewRoomAdded] = useState(false);
+
+  // If new room is added go back to "/rooms"
+  useEffect(() => {
+    if (location.state?.isNewRoomAdded) {
+      setIsNewRoomAdded(true);
+    }
+  }, [location]);
+
+// Fetch rooms
   const {
     data: rooms,
     isLoading,
@@ -18,12 +26,9 @@ export default function RoomsPage() {
     refetch,
   } = useFetch('https://sub-club-ce3cc207c2f9.herokuapp.com/rooms');
 
-  useEffect(() => {
-    if (location.state?.isNewRoomAdded) {
-      setIsNewRoomAdded(true);
-    }
-  }, [location]);
 
+// Refetch rooms after new room is added
+  const [isNewRoomAdded, setIsNewRoomAdded] = useState(false);
   useEffect(() => {
     if (isNewRoomAdded) {
       refetch();
@@ -31,7 +36,7 @@ export default function RoomsPage() {
     }
   }, [isNewRoomAdded, refetch]);
 
-  // To hide data from the get request when rooms is being updating
+  // Hide data from the get request when rooms is being updating
   const [isRoomDataVisible, setIsRoomDataVisible] = useState(true);
 
   // Set the state for edit room
