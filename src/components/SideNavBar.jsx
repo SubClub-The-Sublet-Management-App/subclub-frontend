@@ -80,7 +80,7 @@ function SideNavBar() {
 
   return (
     <div
-      className={` relative min-h-screen transition-all duration-700 ease-in-out transform z-10 ${
+      className={` relative min-h-screen transition-all duration-700 ease-in-out transform z-500 ${
         isEnlarge ? 'w-64 bg-lightPrimary' : 'w-0'
       } ${isEnlarge ? 'lg:block' : 'lg:hidden'}`}
     >
