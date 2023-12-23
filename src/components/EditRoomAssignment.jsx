@@ -33,12 +33,15 @@ export default function EditRoomAssignment({
     roomAssignment.rentalPaymentFrequency
   );
 
-  // function to handle the occupant and room selection
+  // function to handle the occupant, room and payment frequency selection
   const handleOccupantSelect = (occupant) => {
     setSelectedOccupant(occupant);
   };
   const handleRoomSelect = (room) => {
     setSelectedRoom(room);
+  };
+  const handleFrequencySelect = (value) => {
+    setFrequencySelected(value.toLowerCase());
   };
 
   // Handle changes on the rent inclusion input
@@ -227,12 +230,11 @@ export default function EditRoomAssignment({
                   Payment Frequency
                 </label>
                 <div className='mt-2'>
-                  <PaymentFrequencyListBox
-                    value={rentalPaymentFrequency}
-                    onChange={(value) =>
-                      setFrequencySelected(value.frequency.toLowerCase())
-                    }
-                  />
+
+                <PaymentFrequencyListBox
+                  value={rentalPaymentFrequency}
+                  onChange={handleFrequencySelect}
+                />
                 </div>
               </div>
               <div className='w-full p-2'>
