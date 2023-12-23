@@ -161,12 +161,17 @@ export default function RoomAssignmentPage() {
                               {formatDate(roomAssignment.endDate)}
                             </p>
                             <p className='text-sm font-normal  text-lightSecondary my-2'>
-                              Assignment status: 
+                              Assignment status:
                             </p>
-                            <p className={`text-md font-bold ${roomAssignment.isActive ? 'text-green-500' : 'text-red-500'}`}>
-                              {roomAssignment.isActive ? "Active" : "Cancelled"}
+                            <p
+                              className={`text-md font-bold ${
+                                roomAssignment.isActive
+                                  ? 'text-green-500'
+                                  : 'text-red-500'
+                              }`}
+                            >
+                              {roomAssignment.isActive ? 'Active' : 'Cancelled'}
                             </p>
-
                           </div>
                         )}
 
@@ -226,17 +231,13 @@ export default function RoomAssignmentPage() {
                             >
                               Agreement
                             </button>
- {/* Component to handle the deletion of the roomAssignment */}
+                            {/* Component to handle the deletion of the roomAssignment */}
                             <CancelRoomAssignment
                               roomAssignmentId={roomAssignment._id}
                               refetch={refetch}
                               isDisabled={!roomAssignment.isActive}
                             />
-
-                            
                           </div>
-                         
-
                         </div>
                       </>
                     )}

@@ -16,7 +16,6 @@ export default function DeleteOccupant({ id, refetch }) {
     setIsConfirmOpen(true);
   };
 
-
   const handleConfirmDelete = async () => {
     setIsConfirmOpen(false);
     setIsLoading(true);
@@ -44,7 +43,7 @@ export default function DeleteOccupant({ id, refetch }) {
       setIsLoading(false);
     }
   };
-  
+
   useEffect(() => {
     if (isModalOpen) {
       const timer = setTimeout(() => {
@@ -70,7 +69,7 @@ export default function DeleteOccupant({ id, refetch }) {
       />
       <ConfirmDeleteModal
         isOpen={isConfirmOpen}
-        message="Are you sure you want to delete this occupant?"
+        message='Are you sure you want to delete this occupant?'
         onClose={() => setIsConfirmOpen(false)}
         onConfirm={handleConfirmDelete}
       />

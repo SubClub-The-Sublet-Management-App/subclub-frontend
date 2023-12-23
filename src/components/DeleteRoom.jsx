@@ -43,7 +43,7 @@ export default function DeleteRoom({ id, refetch }) {
       setIsLoading(false);
     }
   };
-  
+
   useEffect(() => {
     if (isModalOpen) {
       const timer = setTimeout(() => {
@@ -52,7 +52,6 @@ export default function DeleteRoom({ id, refetch }) {
       return () => clearTimeout(timer);
     }
   }, [isModalOpen, refetch]);
-
 
   return (
     <div className='mx-4'>
@@ -70,7 +69,7 @@ export default function DeleteRoom({ id, refetch }) {
       />
       <ConfirmDeleteModal
         isOpen={isConfirmOpen}
-        message="Are you sure you want to delete this room?"
+        message='Are you sure you want to delete this room?'
         onClose={() => setIsConfirmOpen(false)}
         onConfirm={handleConfirmDelete}
       />

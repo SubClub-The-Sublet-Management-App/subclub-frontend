@@ -12,7 +12,7 @@ export default function NewOccupantPage() {
 
   const handleCreateRoom = (data) => {
     handleSubmit(
-      'https://sub-club-ce3cc207c2f9.herokuapp.com/occupants',
+      '/occupants',
       data,
       (responseData) => {
         setModalMessage(responseData.message); // set the message to display in the modal
@@ -31,6 +31,7 @@ export default function NewOccupantPage() {
       token
     );
   };
+  
   return (
     <div>
       <div className='flex flex-col '>
