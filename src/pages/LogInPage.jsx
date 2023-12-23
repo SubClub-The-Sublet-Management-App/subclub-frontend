@@ -133,7 +133,7 @@ export default function LogInPage() {
                   type='submit'
                   className='flex justify-center align-middle w-full rounded-md bg-primary px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary'
                 >
-                  Sign in
+                 Log In
                 </button>
               </div>
             </form>
