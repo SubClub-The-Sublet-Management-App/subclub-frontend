@@ -1,70 +1,65 @@
-# Getting Started with Create React App
+# SubClub - The Sublet Management App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+🌎 Deployed App: https://thesubclubapp.netlify.app/
 
-## Available Scripts
+🖥 Client Repo: https://github.com/SubClub-The-Sublet-Management-App/subclub-frontend
 
-In the project directory, you can run:
+🖥 Server Repo: https://github.com/SubClub-The-Sublet-Management-App/SubClub-backend/settings
 
-### `npm start`
+📖 Part A Documentation Repo: https://github.com/SubClub-The-Sublet-Management-App/SubClub-Docs
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Overview
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+Sub.club is a web application that addresses Victoria's housing challenges by providing a streamlined solution for those looking to share their home by subletting. This application simplifies the management of rooms, occupants(tenant) and agreements made with each occupant. Focused on ease of use and automation, it aims to improve the subletting experience, filling a gap in the market left by existing solutions such as paper or Excel-based methods.
 
-### `npm test`
+The application has been built with the MERN stack and deployed with Netlify and Heroku.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Main features of the application:
 
-### `npm run build`
+#### User account:
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- user account creation
+- Login authentication
+- Keeps the session open for a maximum of 24 hours for security reasons.
+- Logout button to end the session.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+#### Rooms:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- Creation of rooms available for subletting
+- View users' rooms
+- Button to update room information
+- Button to delete rooms
 
-### `npm run eject`
+#### Occupants:
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+- Create occupant profiles
+- View occupant profile
+- Button to update occupant profile data
+- Button for deleting occupant
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+#### Room Assignment:
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+- Create room assignments by linking occupants and rooms, and adding information about payment arrangements and dates of stay.
+- Display of each room assignment
+- Button to update room assignment information.
+- Button to cancel a room assignment.
+- Display status of room assignments (active / cancelled).
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+Also include:
 
-## Learn More
+- Prints messages to inform the user of the status of the action (Example: when a room is successfully created).
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## Installation Instructions
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+To use the production application, please visit [The SubClub App](https://thesubclubapp.netlify.app/) and create an account.
 
-### Code Splitting
+To use the app locally, please follow the below instructions.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+Requirements:
 
-### Analyzing the Bundle Size
+* Node.js v18.18.0
+* MongoDB Atlas account. *If you do not have MongoDB please visit [MongoBD Atlas](https://www.mongodb.com/docs/atlas/) and create a free account.*
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
 
-### Making a Progressive Web App
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
 
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
