@@ -18,7 +18,7 @@ export default function RoomsPage() {
     }
   }, [location]);
 
-// Fetch rooms
+  // Fetch rooms
   const {
     data: rooms,
     isLoading,
@@ -26,8 +26,7 @@ export default function RoomsPage() {
     refetch,
   } = useFetch('https://sub-club-ce3cc207c2f9.herokuapp.com/rooms');
 
-
-// Refetch rooms after new room is added
+  // Refetch rooms after new room is added
   const [isNewRoomAdded, setIsNewRoomAdded] = useState(false);
   useEffect(() => {
     if (isNewRoomAdded) {

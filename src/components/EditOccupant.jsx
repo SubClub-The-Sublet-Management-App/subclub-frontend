@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import handleSubmit from '../functions/handleSubmit';
 import ModalMessages from './ModalMessages';
-import formatDob from '../functions/formatDOB';
+import formattedDateForBackend from '../functions/formatDOB';
 
 export default function EditOccupant({
   occupant,
@@ -26,7 +26,9 @@ export default function EditOccupant({
   const [lastName, setLastName] = useState(occupant.lastName);
   const [phoneNumber, setPhoneNumber] = useState(occupant.phoneNumber);
   const [email, setEmail] = useState(occupant.email);
-  const [dob, setDob] = useState(occupant.dob ? formatDob(occupant.dob) : '');
+  const [dob, setDob] = useState(
+    occupant.dob ? formattedDateForBackend(occupant.dob) : ''
+  );
   const [occupation, setOccupation] = useState(occupant.occupation);
   const [emergencyContactFirstName, setEmergencyContactFirstName] = useState(
     occupant.emergencyContact.firstName

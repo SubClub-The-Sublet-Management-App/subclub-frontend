@@ -9,7 +9,9 @@ const paymentFrequency = [
 ];
 
 export default function PaymentFrequencyListBox({ onChange }) {
-  const [selected, setSelected] = useState(paymentFrequency[0]);
+  const [selected, setSelected] = useState(null);
+
+  
 
   const handleSelect = (frequency) => {
     setSelected(frequency);
@@ -20,7 +22,9 @@ export default function PaymentFrequencyListBox({ onChange }) {
       <Listbox value={selected} onChange={handleSelect}>
         <div className='relative mt-1'>
           <Listbox.Button className='relative w-full cursor-default rounded-md  bg-gray-50 py-2 pl-3 pr-10 text-left shadow-md focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white/75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm'>
-            <span className='block truncate'>{selected.frequency}</span>
+            <span className='block truncate'>
+              {selected ? selected.frequency : 'Select a frequency payment'}
+            </span>
             <span className='pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2'>
               <FaChevronDown
                 className='h-5 w-5 text-lightPrimary'

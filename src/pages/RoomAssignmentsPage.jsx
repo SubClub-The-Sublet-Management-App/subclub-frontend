@@ -27,9 +27,9 @@ export default function RoomAssignmentPage() {
     refetch,
   } = useFetch('https://sub-club-ce3cc207c2f9.herokuapp.com/room-assignments');
 
-
-  // If room assignment is added refetch to get changes on "/room-assignments" 
-  const [isNewRoomAssignmentAdded, setIsNewRoomAssignmentAdded] = useState(false);
+  // If room assignment is added refetch to get changes on "/room-assignments"
+  const [isNewRoomAssignmentAdded, setIsNewRoomAssignmentAdded] =
+    useState(false);
 
   useEffect(() => {
     if (isNewRoomAssignmentAdded) {
@@ -38,15 +38,15 @@ export default function RoomAssignmentPage() {
     }
   }, [isNewRoomAssignmentAdded, refetch]);
 
-
-  // Handle room assignment views 
+  // Handle room assignment views
   const [views, setViews] = useState({});
   const setRoomAssignmentView = (id, newView) => {
     setViews((prevViews) => ({ ...prevViews, [id]: newView }));
   };
 
   // Hide data from the get request when occupants is being updating
-  const [isRoomAssignmentDataVisible, setIsRoomAssignmentDataVisible] = useState(true);
+  const [isRoomAssignmentDataVisible, setIsRoomAssignmentDataVisible] =
+    useState(true);
 
   // Set the state for edit Occupant
   const [isEditing, setIsEditing] = useState(false);
@@ -69,7 +69,7 @@ export default function RoomAssignmentPage() {
   }
   // Error handling
   if (error) return <div>Error: {error}</div>;
-  console.log(roomAssignments);
+
   return (
     <div>
       <h1 className='m-2 py-2 text-left text-3xl font-bold leading-9 tracking-tight text-gray-900 border-b-2 border-gray-300'>
@@ -90,132 +90,149 @@ export default function RoomAssignmentPage() {
 
           {/* Display room assignment information*/}
           <div className='flex flex-wrap justify-center'>
-            {roomAssignments && roomAssignments.data.map((roomAssignment) => {
-              if (!views[roomAssignment._id]) {
-                setViews((prevViews) => ({
-                  ...prevViews,
-                  [roomAssignment._id]: 'assignment',
-                }));
-              }
-              // Show th update roomAssignment form component when click the edit button
-              return isRoomAssignmentDataVisible ||
-                (isEditing && editedRoomAssignment === roomAssignment) ? (
-                <div
-                  className=' bg-gray-100 p-6 rounded-lg shadow-lg m-8 w-300 h-400'
-                  key={roomAssignment._id}
-                >
-                  {isEditing && editedRoomAssignment === roomAssignment ? (
-                    <EditRoomAssignment
-                      roomAssignment={editedRoomAssignment}
-                      refetch={refetch}
-                      setIsEditing={setIsEditing}
-                      setEditedRoomAssignment={setEditedRoomAssignment}
-                      setIsRoomAssignmentDataVisible={setIsRoomAssignmentDataVisible}
-                    />
-                  ) : (
-                    <>
-                      {/* Handle the view of the card, Show room assignment information  */}
-                      {views[roomAssignment._id] === 'assignment' && (
-                        <div className='p-8 w-300 h-400'>
-                          <div className='w-full flex justify-between align-middle'>
-                            <h2 className='text-2xl font-bold mb-2 text-lightPrimary uppercase'>
-                              {roomAssignment.room && roomAssignment.room.name}
-                            </h2>
-                            {/* Edit room assignment button */}
+            {roomAssignments &&
+              roomAssignments.data.map((roomAssignment) => {
+                if (!views[roomAssignment._id]) {
+                  setViews((prevViews) => ({
+                    ...prevViews,
+                    [roomAssignment._id]: 'assignment',
+                  }));
+                }
+                // Show th update roomAssignment form component when click the edit button
+                return isRoomAssignmentDataVisible ||
+                  (isEditing && editedRoomAssignment === roomAssignment) ? (
+                  <div
+                    className=' bg-gray-100 p-6 rounded-lg shadow-lg m-8 w-300 h-400'
+                    key={roomAssignment._id}
+                  >
+                    {isEditing && editedRoomAssignment === roomAssignment ? (
+                      <EditRoomAssignment
+                        roomAssignment={editedRoomAssignment}
+                        refetch={refetch}
+                        setIsEditing={setIsEditing}
+                        setEditedRoomAssignment={setEditedRoomAssignment}
+                        setIsRoomAssignmentDataVisible={
+                          setIsRoomAssignmentDataVisible
+                        }
+                      />
+                    ) : (
+                      <>
+                        {/* Handle the view of the card, Show room assignment information  */}
+                        {views[roomAssignment._id] === 'assignment' && (
+                          <div className='p-8 w-300 h-400'>
+                            <div className='w-full flex justify-between align-middle'>
+                              <h2 className='text-2xl font-bold mb-2 text-lightPrimary uppercase'>
+                                {roomAssignment.room &&
+                                  roomAssignment.room.name}
+                              </h2>
+                              {/* Edit room assignment button */}
+                              <button
+                                onClick={() => {
+                                  setIsEditing(true);
+                                  setEditedRoomAssignment(roomAssignment);
+                                  setIsRoomAssignmentDataVisible(false);
+                                }}
+                                className='self-center mb-4'
+                              >
+                                <AiOutlineEdit className='text-lightPrimary w-6 h-6' />
+                              </button>
+                            </div>
+                            {/* Show "anonymous occupant if occupant gets deleted" */}
+                            <p className='text-sm font-normal  text-lightSecondary my-2'>
+                              Room occupant:
+                            </p>
+                            <p className='text-md font-bold text-lightSecondary'>
+                              {roomAssignment.occupant &&
+                              roomAssignment.occupant.firstName &&
+                              roomAssignment.occupant.lastName
+                                ? `${roomAssignment.occupant.firstName} ${roomAssignment.occupant.lastName}`
+                                : 'Anonymous Occupant'}
+                            </p>
+                            <p className='text-sm font-normal  text-lightSecondary my-2'>
+                              Rent start from:
+                            </p>
+                            <p className='text-md font-bold text-lightSecondary'>
+                              {formatDate(roomAssignment.startDate)}
+                            </p>
+                            <p className='text-sm font-normal  text-lightSecondary my-2'>
+                              Rent end on:
+                            </p>
+                            <p className='text-md font-bold text-lightSecondary'>
+                              {formatDate(roomAssignment.endDate)}
+                            </p>
+                          </div>
+                        )}
+
+                        {/* Show Room Assignment payment agreement */}
+                        {views[roomAssignment._id] === 'contacts' && (
+                          <div className='p-8 w-300 h-500'>
+                            <div className='flex flex-col items-start text-lightSecondary'>
+                              <h2 className='text-2xl font-bold mb-2 text-lightPrimary uppercase'>
+                                Payment Agreement
+                              </h2>
+                              <p className='text-sm font-normal  text-lightSecondary mt-2 my-2'>
+                                Rental payment:
+                              </p>
+                              <p className='text-md font-bold text-lightSecondary'>
+                                $ {roomAssignment.rentalPayment}{' '}
+                                <span>AUD</span>
+                              </p>
+                              <p className='text-sm font-normal  text-lightSecondary mt-2 my-2'>
+                                Payment frequency:
+                              </p>
+                              <p className='text-md font-bold text-lightSecondary'>
+                                {roomAssignment.rentalPaymentFrequency}
+                              </p>
+                              <p className='text-sm font-normal  text-lightSecondary mt-2 my-2'>
+                                Security Deposit paid:
+                              </p>
+                              <p className='text-md font-bold text-lightSecondary'>
+                                $ {roomAssignment.securityDeposit}{' '}
+                                <span>AUD</span>
+                              </p>
+                            </div>
+                          </div>
+                        )}
+                        {/* Buttons section */}
+                        <div className='flex items-center px-8 py-2 bg-gray-100 border-t border-gray-200'>
+                          <div className='flex justify-between w-2/3 mx-2'>
+                            {/* Button to handle the state of the card view */}
                             <button
-                              onClick={() => {
-                                setIsEditing(true);
-                                setEditedRoomAssignment(roomAssignment);
-                                setIsRoomAssignmentDataVisible(false);
-                              }}
-                              className='self-center mb-4'
+                              onClick={() =>
+                                setRoomAssignmentView(
+                                  roomAssignment._id,
+                                  'assignment'
+                                )
+                              }
+                              className='px-2 mx-2  text-sm font-semibold text-white bg-primary rounded hover:bg-lightPrimary'
                             >
-                              <AiOutlineEdit className='text-lightPrimary w-6 h-6' />
+                              Assignment
+                            </button>
+                            <button
+                              onClick={() =>
+                                setRoomAssignmentView(
+                                  roomAssignment._id,
+                                  'contacts'
+                                )
+                              }
+                              className='px-2 mx-2 py-2 text-sm font-semibold text-white bg-primary rounded hover:bg-lightPrimary'
+                            >
+                              Agreement
                             </button>
                           </div>
-                          {/* Show "anonymous occupant if occupant gets deleted" */}
-                          <p className='text-sm font-normal  text-lightSecondary my-2'>
-                            Room occupant:
-                          </p>
-                          <p className='text-md font-bold text-lightSecondary'>
-                            {roomAssignment.occupant && roomAssignment.occupant.firstName && roomAssignment.occupant.lastName
-                              ? `${roomAssignment.occupant.firstName} ${roomAssignment.occupant.lastName}`
-                              : 'Anonymous Occupant'}
-                          </p>
-                          <p className='text-sm font-normal  text-lightSecondary my-2'>
-                            Rent start from:
-                          </p>
-                          <p className='text-md font-bold text-lightSecondary'>
-                            {formatDate(roomAssignment.startDate)}
-                          </p>
-                          <p className='text-sm font-normal  text-lightSecondary my-2'>
-                            Rent end on:
-                          </p>
-                          <p className='text-md font-bold text-lightSecondary'>
-                            {formatDate(roomAssignment.endDate)}
-                          </p>
-                        </div>
-                      )}
-
-                      {/* Show Room Assignment payment agreement */}
-                      {views[roomAssignment._id] === 'contacts' && (
-                        <div className='p-8 w-300 h-500'>
-                          <div className='flex flex-col items-start text-lightSecondary'>
-                            <h2 className='text-2xl font-bold mb-2 text-lightPrimary uppercase'>
-                              Payment Agreement
-                            </h2>
-                            <p className='text-sm font-normal  text-lightSecondary mt-2 my-2'>
-                            Rental payment:
-                          </p>
-                          <p className='text-md font-bold text-lightSecondary'>
-                            $ {roomAssignment.rentalPayment} {' '} <span>AUD</span>
-                          </p>
-                          <p className='text-sm font-normal  text-lightSecondary mt-2 my-2'>
-                            Payment frequency:
-                          </p>
-                          <p className='text-md font-bold text-lightSecondary'>
-                            {roomAssignment.rentalPaymentFrequency}
-                          </p>
-                          <p className='text-sm font-normal  text-lightSecondary mt-2 my-2'>
-                            Security Deposit paid:
-                          </p>
-                          <p className='text-md font-bold text-lightSecondary'>
-                            $ {roomAssignment.securityDeposit}{' '} <span>AUD</span>
-                          </p>
+                          {/* Component to handle the deletion of the roomAssignment */}
+                          <div className='mx-4 flex justify-center h-12 w-12'>
+                            <CancelRoomAssignment
+                              id={roomAssignment._id}
+                              refetch={refetch}
+                            />
                           </div>
                         </div>
-                      )}
-                      {/* Buttons section */}
-                      <div className='flex items-center px-8 py-2 bg-gray-100 border-t border-gray-200'>
-                        <div className='flex justify-between w-2/3 mx-2'>
-                          {/* Button to handle the state of the card view */}
-                          <button
-                            onClick={() =>
-                              setRoomAssignmentView(roomAssignment._id, 'assignment')
-                            }
-                            className='px-2 mx-2  text-sm font-semibold text-white bg-primary rounded hover:bg-lightPrimary'
-                          >
-                            Assignment
-                          </button>
-                          <button
-                            onClick={() =>
-                              setRoomAssignmentView(roomAssignment._id, 'contacts')
-                            }
-                            className='px-2 mx-2 py-2 text-sm font-semibold text-white bg-primary rounded hover:bg-lightPrimary'
-                          >
-                            Agreement
-                          </button>
-                        </div>
-                        {/* Component to handle the deletion of the roomAssignment */}
-                        <div className='mx-4 flex justify-center h-12 w-12'>
-                          <CancelRoomAssignment id={roomAssignment._id} refetch={refetch} />
-                        </div>
-                      </div>
-                    </>
-                  )}
-                </div>
-              ) : null;
-            })}
+                      </>
+                    )}
+                  </div>
+                ) : null;
+              })}
           </div>
         </>
       ) : (

@@ -24,4 +24,3 @@ const ModalMessages = ({ isOpen, message, onClose }) => {
 };
 
 export default ModalMessages;
-

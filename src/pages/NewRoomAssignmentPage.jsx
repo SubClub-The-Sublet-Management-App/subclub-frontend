@@ -17,14 +17,13 @@ export default function RoomAssignmentPage() {
   // initialise the message displayed in the modal
   const [modalMessage, setModalMessage] = useState('');
 
-  // initialise the status of the selected room and occupant
+  // initialise the status of the selected room, occupant and payment frequency
   const [selectedRoom, setSelectedRoom] = useState(null);
   const [selectedOccupant, setSelectedOccupant] = useState(null);
+  const [frequencySelected, setFrequencySelected] = useState('');
 
   // initialise the rent inclution field
   const [rentInclusions, setRentInclusions] = useState('');
-
-  const [frequencySelected, setFrequencySelected] = useState('');
 
   // Handle changes on the rent inclusion input
   const handleRentInclusionsChange = (event) => {
@@ -63,7 +62,6 @@ export default function RoomAssignmentPage() {
       },
       token
     );
-    
   };
   return (
     <div>
@@ -186,9 +184,6 @@ export default function RoomAssignmentPage() {
                   Payment
                 </label>
                 <div className='mt-2'>
-                  <span className='absolute left-3 bottom-1 transform -translate-y-1/2 text-primary text-md'>
-                    $
-                  </span>
                   <input
                     id='rentalPayment'
                     name='rentalPayment'
