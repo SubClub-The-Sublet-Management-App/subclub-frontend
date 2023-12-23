@@ -160,6 +160,13 @@ export default function RoomAssignmentPage() {
                             <p className='text-md font-bold text-lightSecondary'>
                               {formatDate(roomAssignment.endDate)}
                             </p>
+                            <p className='text-sm font-normal  text-lightSecondary my-2'>
+                              Assignment status: 
+                            </p>
+                            <p className={`text-md font-bold ${roomAssignment.isActive ? 'text-green-500' : 'text-red-500'}`}>
+                              {roomAssignment.isActive ? "Active" : "Cancelled"}
+                            </p>
+
                           </div>
                         )}
 
@@ -194,8 +201,8 @@ export default function RoomAssignmentPage() {
                           </div>
                         )}
                         {/* Buttons section */}
-                        <div className='flex items-center px-8 py-2 bg-gray-100 border-t border-gray-200'>
-                          <div className='flex justify-between w-2/3 mx-2'>
+                        <div className='flex items-center  px-8 py-2 bg-gray-100 border-t border-gray-200'>
+                          <div className='flex justify-between gap-3 mx-2'>
                             {/* Button to handle the state of the card view */}
                             <button
                               onClick={() =>
@@ -204,7 +211,7 @@ export default function RoomAssignmentPage() {
                                   'assignment'
                                 )
                               }
-                              className='px-2 mx-2  text-sm font-semibold text-white bg-primary rounded hover:bg-lightPrimary'
+                              className='button'
                             >
                               Assignment
                             </button>
@@ -215,18 +222,20 @@ export default function RoomAssignmentPage() {
                                   'contacts'
                                 )
                               }
-                              className='px-2 mx-2 py-2 text-sm font-semibold text-white bg-primary rounded hover:bg-lightPrimary'
+                              className='button'
                             >
                               Agreement
                             </button>
-                          </div>
-                          {/* Component to handle the deletion of the roomAssignment */}
-                          <div className='mx-4 flex justify-center h-12 w-12'>
+ {/* Component to handle the deletion of the roomAssignment */}
                             <CancelRoomAssignment
-                              id={roomAssignment._id}
+                              roomAssignmentId={roomAssignment._id}
                               refetch={refetch}
                             />
+
+                            
                           </div>
+                         
+
                         </div>
                       </>
                     )}

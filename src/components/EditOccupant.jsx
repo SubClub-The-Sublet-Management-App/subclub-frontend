@@ -17,6 +17,8 @@ export default function EditOccupant({
   // Get user auth to send patch request
   const token = localStorage.getItem('userToken');
 
+
+
   // To handle successfull and error messages to user
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalMessage, setModalMessage] = useState('');
@@ -140,8 +142,9 @@ export default function EditOccupant({
         // navigate to the occupants page after a delay
         setTimeout(() => {
           navigate('/occupants');
+          refetch(); 
         }, 2000);
-        refetch(); // refetch the occupant data
+        // refetch the occupant data
         setIsEditing(false); // hide the Editoccupant component
         setEditedOccupant(null); // reset the edited occupant
         setIsOccupantDataVisible(true); // show the occupant data
