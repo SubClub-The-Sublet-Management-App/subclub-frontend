@@ -6,6 +6,7 @@ import { ClipLoader } from 'react-spinners';
 import EditRoomAssignment from '../components/EditRoomAssignment';
 import CancelRoomAssignment from '../components/CancelRoomAssignment';
 import formatDate from '../functions/formatDate';
+const backendUrl = process.env.REACT_APP_BACKEND_URL;
 
 export default function RoomAssignmentPage() {
   // Get location to navigate to "add-room assignment" page when click button: "add room assignment"
@@ -25,7 +26,7 @@ export default function RoomAssignmentPage() {
     isLoading,
     error,
     refetch,
-  } = useFetch('https://sub-club-ce3cc207c2f9.herokuapp.com/room-assignments');
+  } = useFetch(`${backendUrl}/room-assignments`);
 
   // If room assignment is added refetch to get changes on "/room-assignments"
   const [isNewRoomAssignmentAdded, setIsNewRoomAssignmentAdded] =
@@ -161,12 +162,17 @@ export default function RoomAssignmentPage() {
                               {formatDate(roomAssignment.endDate)}
                             </p>
                             <p className='text-sm font-normal  text-lightSecondary my-2'>
-                              Assignment status: 
+                              Assignment status:
                             </p>
-                            <p className={`text-md font-bold ${roomAssignment.isActive ? 'text-green-500' : 'text-red-500'}`}>
-                              {roomAssignment.isActive ? "Active" : "Cancelled"}
+                            <p
+                              className={`text-md font-bold ${
+                                roomAssignment.isActive
+                                  ? 'text-green-500'
+                                  : 'text-red-500'
+                              }`}
+                            >
+                              {roomAssignment.isActive ? 'Active' : 'Cancelled'}
                             </p>
-
                           </div>
                         )}
 
@@ -226,17 +232,13 @@ export default function RoomAssignmentPage() {
                             >
                               Agreement
                             </button>
- {/* Component to handle the deletion of the roomAssignment */}
+                            {/* Component to handle the deletion of the roomAssignment */}
                             <CancelRoomAssignment
                               roomAssignmentId={roomAssignment._id}
                               refetch={refetch}
                               isDisabled={!roomAssignment.isActive}
                             />
-
-                            
                           </div>
-                         
-
                         </div>
                       </>
                     )}

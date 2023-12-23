@@ -4,6 +4,8 @@ import handleSubmit from '../functions/handleSubmit';
 import { useNavigate } from 'react-router-dom';
 import ModalMessages from '../components/ModalMessages';
 
+const backendUrl = process.env.REACT_APP_BACKEND_URL;
+
 export default function SignUpPage() {
   const navigate = useNavigate();
 
@@ -14,7 +16,7 @@ export default function SignUpPage() {
 
   const handleSignUp = (data) => {
     handleSubmit(
-      'https://sub-club-ce3cc207c2f9.herokuapp.com/auth/signup',
+      `${backendUrl}/auth/signup`,
       data,
       (responseData) => {
         // set the message to display in the modal
@@ -171,7 +173,7 @@ export default function SignUpPage() {
                   type='submit'
                   className='flex w-full justify-center rounded-md bg-primary px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary'
                 >
-                  Sign in
+                  Sign up
                 </button>
               </div>
             </form>

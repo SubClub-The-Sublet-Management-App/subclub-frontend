@@ -4,6 +4,8 @@ import { FaTrash } from 'react-icons/fa';
 import { ClipLoader } from 'react-spinners';
 import ConfirmDeleteModal from './ConfirmDeleteModal';
 
+const backendUrl = process.env.REACT_APP_BACKEND_URL;
+
 export default function DeleteRoom({ id, refetch }) {
   // include token as a prop
   const [isLoading, setIsLoading] = useState(false);
@@ -21,16 +23,13 @@ export default function DeleteRoom({ id, refetch }) {
     setIsConfirmOpen(false);
     setIsLoading(true);
     try {
-      const response = await fetch(
-        `https://sub-club-ce3cc207c2f9.herokuapp.com/rooms/${id}`,
-        {
-          method: 'DELETE',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const response = await fetch(`${backendUrl}/rooms/${id}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+      });
       if (!response.ok) {
         throw new Error('Failed to delete room');
       }
@@ -43,7 +42,7 @@ export default function DeleteRoom({ id, refetch }) {
       setIsLoading(false);
     }
   };
-  
+
   useEffect(() => {
     if (isModalOpen) {
       const timer = setTimeout(() => {
@@ -52,7 +51,6 @@ export default function DeleteRoom({ id, refetch }) {
       return () => clearTimeout(timer);
     }
   }, [isModalOpen, refetch]);
-
 
   return (
     <div className='mx-4'>
@@ -70,7 +68,7 @@ export default function DeleteRoom({ id, refetch }) {
       />
       <ConfirmDeleteModal
         isOpen={isConfirmOpen}
-        message="Are you sure you want to delete this room?"
+        message='Are you sure you want to delete this room?'
         onClose={() => setIsConfirmOpen(false)}
         onConfirm={handleConfirmDelete}
       />

@@ -6,7 +6,7 @@ import RoomListBox from './RoomListBox';
 import OccupantListBox from './OccupantListBox';
 import PaymentFrequencyListBox from './PaymentFrequencyListBox';
 import formattedDateForBackend from '../functions/formatDOB';
-
+const backendUrl = process.env.REACT_APP_BACKEND_URL;
 export default function EditRoomAssignment({
   roomAssignment,
   refetch,
@@ -95,7 +95,7 @@ export default function EditRoomAssignment({
     };
 
     handleSubmit(
-      `https://sub-club-ce3cc207c2f9.herokuapp.com/room-assignments/${roomAssignment._id}`,
+      `${backendUrl}/room-assignments/${roomAssignment._id}`,
       data,
       (responseData) => {
         setModalMessage(responseData.message);

@@ -3,7 +3,7 @@ import { useState } from 'react';
 import handleSubmit from '../functions/handleSubmit';
 import ModalMessages from './ModalMessages';
 import formattedDateForBackend from '../functions/formatDOB';
-
+const backendUrl = process.env.REACT_APP_BACKEND_URL;
 export default function EditOccupant({
   occupant,
   refetch,
@@ -16,8 +16,6 @@ export default function EditOccupant({
 
   // Get user auth to send patch request
   const token = localStorage.getItem('userToken');
-
-
 
   // To handle successfull and error messages to user
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -134,7 +132,7 @@ export default function EditOccupant({
     }
 
     handleSubmit(
-      `https://sub-club-ce3cc207c2f9.herokuapp.com/occupants/${occupant._id}`,
+      `${backendUrl}/occupants/${occupant._id}`,
       data,
       (responseData) => {
         setModalMessage(responseData.message);
@@ -142,7 +140,7 @@ export default function EditOccupant({
         // navigate to the occupants page after a delay
         setTimeout(() => {
           navigate('/occupants');
-          refetch(); 
+          refetch();
         }, 2000);
         // refetch the occupant data
         setIsEditing(false); // hide the Editoccupant component

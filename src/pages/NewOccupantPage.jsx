@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import handleSubmit from '../functions/handleSubmit';
 import { useNavigate } from 'react-router-dom';
 import ModalMessages from '../components/ModalMessages';
+const backendUrl = process.env.REACT_APP_BACKEND_URL;
 
 export default function NewOccupantPage() {
   const navigate = useNavigate();
@@ -12,7 +13,7 @@ export default function NewOccupantPage() {
 
   const handleCreateRoom = (data) => {
     handleSubmit(
-      'https://sub-club-ce3cc207c2f9.herokuapp.com/occupants',
+      `${backendUrl}/occupants`,
       data,
       (responseData) => {
         setModalMessage(responseData.message); // set the message to display in the modal
@@ -31,6 +32,7 @@ export default function NewOccupantPage() {
       token
     );
   };
+
   return (
     <div>
       <div className='flex flex-col '>

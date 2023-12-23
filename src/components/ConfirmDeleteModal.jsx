@@ -1,6 +1,13 @@
 import React from 'react';
 
-const ConfirmDeleteModal = ({ isOpen, message, onClose, onConfirm, noActionText = 'Cancel', actionText = 'Delete' }) => {
+const ConfirmDeleteModal = ({
+  isOpen,
+  message,
+  onClose,
+  onConfirm,
+  noActionText = 'Cancel',
+  actionText = 'Delete',
+}) => {
   if (!isOpen) {
     return null;
   }

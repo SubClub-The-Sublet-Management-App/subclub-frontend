@@ -7,6 +7,8 @@ import DeleteOccupant from '../components/DeleteOccupant';
 import { ClipLoader } from 'react-spinners';
 import calculateAge from '../functions/calculateAge';
 
+const backendUrl = process.env.REACT_APP_BACKEND_URL;
+
 export default function OccupantsPage() {
   // Get location to navigate to "add-occupant" page
   const location = useLocation();
@@ -24,7 +26,7 @@ export default function OccupantsPage() {
     isLoading,
     error,
     refetch,
-  } = useFetch('https://sub-club-ce3cc207c2f9.herokuapp.com/occupants');
+  } = useFetch(`${backendUrl}/occupants`);
 
   useEffect(() => {
     if (location.state?.isNewOccupantAdded) {
