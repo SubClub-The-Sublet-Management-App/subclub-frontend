@@ -3,7 +3,7 @@ import { Listbox, Transition } from '@headlessui/react';
 import { FaCheck, FaChevronDown } from 'react-icons/fa';
 import useFetch from '../functions/useFetch';
 
-export default function RoomListBox({ onRoomSelect }) {
+export default function RoomListBox({ onRoomSelect, value }) {
   // Fetch rooms data
   const {
     data: rooms,
@@ -11,7 +11,7 @@ export default function RoomListBox({ onRoomSelect }) {
     error,
   } = useFetch('https://sub-club-ce3cc207c2f9.herokuapp.com/rooms');
   // initialise selection state
-  const [selected, setSelected] = useState(null);
+  const [selected, setSelected] =useState(value || null);
 
   useEffect(() => {
     if (rooms && rooms.length > 0) {

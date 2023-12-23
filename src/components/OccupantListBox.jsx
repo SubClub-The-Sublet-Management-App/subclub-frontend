@@ -3,7 +3,7 @@ import { Listbox, Transition } from '@headlessui/react';
 import { FaCheck, FaChevronDown } from 'react-icons/fa';
 import useFetch from '../functions/useFetch';
 
-export default function OccupantListBox({ onOccupantSelect }) {
+export default function OccupantListBox({ onOccupantSelect, value }) {
   // Fetch occupants data
   const {
     data: occupants,
@@ -11,7 +11,7 @@ export default function OccupantListBox({ onOccupantSelect }) {
     error,
   } = useFetch('https://sub-club-ce3cc207c2f9.herokuapp.com/occupants');
   // initialise selection state
-  const [selected, setSelected] = useState(null);
+  const [selected, setSelected] = useState(value || null);
 
   useEffect(() => {
     if (occupants && occupants.length > 0) {
