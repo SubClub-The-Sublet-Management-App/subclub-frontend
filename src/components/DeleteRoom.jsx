@@ -1,7 +1,8 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import ModalMessages from './ModalMessages';
 import { FaTrash } from 'react-icons/fa';
 import { ClipLoader } from 'react-spinners';
+import ConfirmDeleteModal from './ConfirmDeleteModal';
 
 export default function DeleteRoom({ id, refetch }) {
   // include token as a prop
@@ -10,7 +11,14 @@ export default function DeleteRoom({ id, refetch }) {
   const [modalMessage, setModalMessage] = useState('');
   const token = localStorage.getItem('userToken');
 
-  const handleDelete = async () => {
+  const [isConfirmOpen, setIsConfirmOpen] = useState(false);
+
+  const handleDelete = () => {
+    setIsConfirmOpen(true);
+  };
+
+  const handleConfirmDelete = async () => {
+    setIsConfirmOpen(false);
     setIsLoading(true);
     try {
       const response = await fetch(
@@ -28,7 +36,6 @@ export default function DeleteRoom({ id, refetch }) {
       }
       setModalMessage('Room deleted successfully');
       setIsModalOpen(true);
-      refetch();
     } catch (error) {
       setModalMessage(error.message);
       setIsModalOpen(true);
@@ -36,6 +43,16 @@ export default function DeleteRoom({ id, refetch }) {
       setIsLoading(false);
     }
   };
+  
+  useEffect(() => {
+    if (isModalOpen) {
+      const timer = setTimeout(() => {
+        refetch();
+      }, 2000);
+      return () => clearTimeout(timer);
+    }
+  }, [isModalOpen, refetch]);
+
 
   return (
     <div className='mx-4'>
@@ -43,13 +60,19 @@ export default function DeleteRoom({ id, refetch }) {
         {isLoading ? (
           <ClipLoader color='#7E49F2' size={15} />
         ) : (
-          <FaTrash className='text-lightPrimary h-6 align-middle self-center m-0' />
+          <FaTrash className='text-lightPrimary h-6 align-middle self-center m-0 hover:text-red-600' />
         )}
       </button>
       <ModalMessages
         isOpen={isModalOpen}
         message={modalMessage}
         onClose={() => setIsModalOpen(false)}
+      />
+      <ConfirmDeleteModal
+        isOpen={isConfirmOpen}
+        message="Are you sure you want to delete this room?"
+        onClose={() => setIsConfirmOpen(false)}
+        onConfirm={handleConfirmDelete}
       />
     </div>
   );

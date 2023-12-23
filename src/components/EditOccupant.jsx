@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import handleSubmit from '../functions/handleSubmit';
 import ModalMessages from './ModalMessages';
-import formatDob from '../functions/formatDOB';
+import formattedDateForBackend from '../functions/formatDOB';
 
 export default function EditOccupant({
   occupant,
@@ -17,6 +17,8 @@ export default function EditOccupant({
   // Get user auth to send patch request
   const token = localStorage.getItem('userToken');
 
+
+
   // To handle successfull and error messages to user
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalMessage, setModalMessage] = useState('');
@@ -26,7 +28,9 @@ export default function EditOccupant({
   const [lastName, setLastName] = useState(occupant.lastName);
   const [phoneNumber, setPhoneNumber] = useState(occupant.phoneNumber);
   const [email, setEmail] = useState(occupant.email);
-  const [dob, setDob] = useState(occupant.dob ? formatDob(occupant.dob) : '');
+  const [dob, setDob] = useState(
+    occupant.dob ? formattedDateForBackend(occupant.dob) : ''
+  );
   const [occupation, setOccupation] = useState(occupant.occupation);
   const [emergencyContactFirstName, setEmergencyContactFirstName] = useState(
     occupant.emergencyContact.firstName
@@ -138,8 +142,9 @@ export default function EditOccupant({
         // navigate to the occupants page after a delay
         setTimeout(() => {
           navigate('/occupants');
+          refetch(); 
         }, 2000);
-        refetch(); // refetch the occupant data
+        // refetch the occupant data
         setIsEditing(false); // hide the Editoccupant component
         setEditedOccupant(null); // reset the edited occupant
         setIsOccupantDataVisible(true); // show the occupant data

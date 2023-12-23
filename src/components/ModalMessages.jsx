@@ -6,7 +6,7 @@ const ModalMessages = ({ isOpen, message, onClose }) => {
   }
 
   return (
-    <div className='fixed inset-0 flex items-center justify-center bg-black/25'>
+    <div className='fixed inset-0 flex items-center justify-center bg-black/25  h-screen z-1000'>
       <div className='bg-white p-6 rounded-2xl shadow-xl max-w-md w-full'>
         <h2 className='text-lg font-medium leading-6 text-gray-900 mb-4'>
           Message
@@ -24,23 +24,3 @@ const ModalMessages = ({ isOpen, message, onClose }) => {
 };
 
 export default ModalMessages;
-
-// const ModalMessages = ({ isOpen, message, onClose }) => {
-//     if (!isOpen) {
-//         return null;
-//     }
-
-//     return (
-
-//         <div className="modal fixed inset-0 flex items-center justify-center">
-//             <div className="modal-content">
-//                 <h2>Message</h2>
-//                 <p>{message}</p>
-//                 <button className="rounded-md bg-black/20 px-4 py-2 text-sm font-medium text-white hover:bg-black/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75"
-//                 onClick={onClose}>Close</button>
-//             </div>
-//         </div>
-//     );
-// };
-
-// export default ModalMessages;
