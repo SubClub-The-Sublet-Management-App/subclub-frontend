@@ -9,7 +9,7 @@ const paymentFrequency = [
 ];
 
 export default function PaymentFrequencyListBox({ onChange, value }) {
-  const [selected, setSelected] = useState(value ? value.frequency : null);
+  const [selected, setSelected] = useState(value || null);
 
   const handleSelect = (frequency) => {
     setSelected(frequency);
