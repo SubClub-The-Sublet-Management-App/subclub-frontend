@@ -4,6 +4,8 @@ import { FaTrash } from 'react-icons/fa';
 import { ClipLoader } from 'react-spinners';
 import ConfirmDeleteModal from './ConfirmDeleteModal';
 
+const backendUrl = process.env.REACT_APP_BACKEND_URL;
+
 export default function DeleteOccupant({ id, refetch }) {
   const [isLoading, setIsLoading] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -20,16 +22,13 @@ export default function DeleteOccupant({ id, refetch }) {
     setIsConfirmOpen(false);
     setIsLoading(true);
     try {
-      const response = await fetch(
-        `https://sub-club-ce3cc207c2f9.herokuapp.com/occupants/${id}`,
-        {
-          method: 'DELETE',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const response = await fetch(`${backendUrl}/occupants/${id}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+      });
       if (!response.ok) {
         throw new Error('Failed to delete occupant');
       }
@@ -55,11 +54,15 @@ export default function DeleteOccupant({ id, refetch }) {
 
   return (
     <div className='mx-4'>
-      <button onClick={handleDelete} disabled={isLoading}>
+      <button
+        className='flex h-7 w-7 align-middle mt-2'
+        onClick={handleDelete}
+        disabled={isLoading}
+      >
         {isLoading ? (
           <ClipLoader color='#7E49F2' size={15} />
         ) : (
-          <FaTrash className='text-lightPrimary h-6 align-middle self-center m-0 hover:text-red-600' />
+          <FaTrash className='text-lightPrimary h-full m-0 w-full hover:text-red-600' />
         )}
       </button>
       <ModalMessages

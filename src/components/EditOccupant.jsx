@@ -3,7 +3,7 @@ import { useState } from 'react';
 import handleSubmit from '../functions/handleSubmit';
 import ModalMessages from './ModalMessages';
 import formattedDateForBackend from '../functions/formatDOB';
-
+const backendUrl = process.env.REACT_APP_BACKEND_URL;
 export default function EditOccupant({
   occupant,
   refetch,
@@ -132,7 +132,7 @@ export default function EditOccupant({
     }
 
     handleSubmit(
-      `https://sub-club-ce3cc207c2f9.herokuapp.com/occupants/${occupant._id}`,
+      `${backendUrl}/occupants/${occupant._id}`,
       data,
       (responseData) => {
         setModalMessage(responseData.message);

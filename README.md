@@ -57,9 +57,5 @@ To use the app locally, please follow the below instructions.
 
 Requirements:
 
-* Node.js v18.18.0
-* MongoDB Atlas account. *If you do not have MongoDB please visit [MongoBD Atlas](https://www.mongodb.com/docs/atlas/) and create a free account.*
-
-
-
-
+- Node.js v18.18.0
+- MongoDB Atlas account. _If you do not have MongoDB please visit [MongoBD Atlas](https://www.mongodb.com/docs/atlas/) and create a free account._

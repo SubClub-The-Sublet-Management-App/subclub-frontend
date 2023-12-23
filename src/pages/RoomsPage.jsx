@@ -6,6 +6,8 @@ import EditRoom from '../components/EditRoom';
 import DeleteRoom from '../components/DeleteRoom';
 import { ClipLoader } from 'react-spinners';
 
+const backendUrl = process.env.REACT_APP_BACKEND_URL;
+
 export default function RoomsPage() {
   // Get location to navigate to "/add-room" page
   const location = useLocation();
@@ -24,7 +26,7 @@ export default function RoomsPage() {
     isLoading,
     error,
     refetch,
-  } = useFetch('https://sub-club-ce3cc207c2f9.herokuapp.com/rooms');
+  } = useFetch(`${backendUrl}/rooms`);
 
   // Refetch rooms after new room is added
   const [isNewRoomAdded, setIsNewRoomAdded] = useState(false);

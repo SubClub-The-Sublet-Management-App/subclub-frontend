@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import handleSubmit from '../functions/handleSubmit';
 import ModalMessages from '../components/ModalMessages';
 import ConfirmDeleteModal from '../components/ConfirmDeleteModal';
+const backendUrl = process.env.REACT_APP_BACKEND_URL;
 
 export default function CancelRoomAssignment({
   roomAssignmentId,
@@ -21,7 +22,7 @@ export default function CancelRoomAssignment({
     const data = { isActive: false };
 
     handleSubmit(
-      `https://sub-club-ce3cc207c2f9.herokuapp.com/room-assignments/${roomAssignmentId}`,
+      `${backendUrl}/room-assignments/${roomAssignmentId}`,
       data,
       (responseData) => {
         setModalMessage(responseData.message);

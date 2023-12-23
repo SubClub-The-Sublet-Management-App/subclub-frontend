@@ -5,6 +5,8 @@ import logo from '../assets/images/sub-club-logo.svg';
 import ModalMessages from '../components/ModalMessages';
 import { AuthContext } from '../components/AuthContext';
 
+const backendUrl = process.env.REACT_APP_BACKEND_URL;
+
 export default function LogInPage() {
   const { setIsAuthenticated } = useContext(AuthContext);
   const navigate = useNavigate();
@@ -20,7 +22,7 @@ export default function LogInPage() {
 
     try {
       const response = await axios.post(
-        'https://sub-club-ce3cc207c2f9.herokuapp.com/auth/login',
+        `${backendUrl}/auth/login`,
         { email, password },
         { withCredentials: true }
       );
@@ -133,7 +135,7 @@ export default function LogInPage() {
                   type='submit'
                   className='flex justify-center align-middle w-full rounded-md bg-primary px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary'
                 >
-                 Log In
+                  Log In
                 </button>
               </div>
             </form>

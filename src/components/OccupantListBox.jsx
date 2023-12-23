@@ -2,6 +2,7 @@ import { Fragment, useState, useEffect } from 'react';
 import { Listbox, Transition } from '@headlessui/react';
 import { FaCheck, FaChevronDown } from 'react-icons/fa';
 import useFetch from '../functions/useFetch';
+const backendUrl = process.env.REACT_APP_BACKEND_URL;
 
 export default function OccupantListBox({ onOccupantSelect, value }) {
   // Fetch occupants data
@@ -9,7 +10,7 @@ export default function OccupantListBox({ onOccupantSelect, value }) {
     data: occupants,
     isLoading,
     error,
-  } = useFetch('https://sub-club-ce3cc207c2f9.herokuapp.com/occupants');
+  } = useFetch(`${backendUrl}/occupants`);
   // initialise selection state
   const [selected, setSelected] = useState(value || null);
 

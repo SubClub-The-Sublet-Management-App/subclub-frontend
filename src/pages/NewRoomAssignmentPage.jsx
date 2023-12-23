@@ -4,7 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import ModalMessages from '../components/ModalMessages';
 import RoomListBox from '../components/RoomListBox';
 import OccupantListBox from '../components/OccupantListBox';
-import PaymentFrequencyListBox from '../components/PaymentFrequencyListBox';
+
+const backendUrl = process.env.REACT_APP_BACKEND_URL;
 
 export default function RoomAssignmentPage() {
   const navigate = useNavigate();
@@ -20,7 +21,6 @@ export default function RoomAssignmentPage() {
   // initialise the status of the selected room, occupant and payment frequency
   const [selectedRoom, setSelectedRoom] = useState(null);
   const [selectedOccupant, setSelectedOccupant] = useState(null);
-  const [frequencySelected, setFrequencySelected] = useState('');
 
   // initialise the rent inclution field
   const [rentInclusions, setRentInclusions] = useState('');
@@ -41,8 +41,10 @@ export default function RoomAssignmentPage() {
   // Function to send the post request through handle submit function
   const handleCreateRoom = (data) => {
     handleSubmit(
-      'https://sub-club-ce3cc207c2f9.herokuapp.com/room-assignments',
+      `${backendUrl}/room-assignments`,
+
       data,
+
       (responseData) => {
         // set the message to display in the modal
         setModalMessage(responseData.message);
@@ -63,6 +65,7 @@ export default function RoomAssignmentPage() {
       token
     );
   };
+
   return (
     <div>
       <div className='flex flex-col '>
@@ -93,7 +96,8 @@ export default function RoomAssignmentPage() {
                 .map((item) => item.trim())
                 .filter((item) => item);
               const rentalPayment = event.target.elements.rentalPayment.value;
-              const frequency = frequencySelected;
+              const rentalPaymentFrequency =
+                event.target.elements.rentalPaymentFrequency.value;
 
               handleCreateRoom({
                 room,
@@ -102,7 +106,7 @@ export default function RoomAssignmentPage() {
                 endDate,
                 rentInclusions: rentInclusionsList,
                 rentalPayment,
-                rentalPaymentFrequency: frequency,
+                rentalPaymentFrequency,
                 securityDeposit,
               });
             }}
@@ -200,12 +204,21 @@ export default function RoomAssignmentPage() {
                   Payment Frequency
                 </label>
                 <div className='mt-2'>
-                  <PaymentFrequencyListBox
-                    value={frequencySelected}
-                    onChange={(value) =>
-                      setFrequencySelected(value.frequency.toLowerCase())
-                    }
+                  <input
+                    id='rentalPaymentFrequency'
+                    name='rentalPaymentFrequency'
+                    type='text'
+                    autoComplete='rentalPaymentFrequency'
+                    required
+                    className='input-field pl-4'
                   />
+                  <p className='text-xs text-gray-600 font-light'>
+                    Please add one of this options:{' '}
+                    <span className='text-xs font-medium'>
+                      {' '}
+                      weekly, fortnightly, or monthly
+                    </span>{' '}
+                  </p>
                 </div>
               </div>
 

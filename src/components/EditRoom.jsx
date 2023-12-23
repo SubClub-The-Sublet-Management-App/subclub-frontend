@@ -3,6 +3,7 @@ import { useState } from 'react';
 import handleSubmit from '../functions/handleSubmit';
 import ModalMessages from './ModalMessages';
 
+const backendUrl = process.env.REACT_APP_BACKEND_URL;
 export default function EditRoom({
   room,
   refetch,
@@ -35,7 +36,7 @@ export default function EditRoom({
     if (room.content !== content) data.content = content;
 
     handleSubmit(
-      `https://sub-club-ce3cc207c2f9.herokuapp.com/rooms/${room._id}`,
+      `${backendUrl}/rooms/${room._id}`,
       data,
       (responseData) => {
         setModalMessage(responseData.message); // set the message to display in the modal

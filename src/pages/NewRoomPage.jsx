@@ -3,6 +3,8 @@ import handleSubmit from '../functions/handleSubmit';
 import { useNavigate } from 'react-router-dom';
 import ModalMessages from '../components/ModalMessages';
 
+const backendUrl = process.env.REACT_APP_BACKEND_URL;
+
 export default function NewRoomPage() {
   const navigate = useNavigate();
   const token = localStorage.getItem('userToken'); // Get the token from local storage
@@ -12,7 +14,7 @@ export default function NewRoomPage() {
 
   const handleCreateRoom = (data) => {
     handleSubmit(
-      'https://sub-club-ce3cc207c2f9.herokuapp.com/rooms',
+      `${backendUrl}/rooms`,
       data,
       (responseData) => {
         setModalMessage(responseData.message); // set the message to display in the modal
