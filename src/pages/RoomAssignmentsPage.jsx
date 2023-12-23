@@ -230,6 +230,7 @@ export default function RoomAssignmentPage() {
                             <CancelRoomAssignment
                               roomAssignmentId={roomAssignment._id}
                               refetch={refetch}
+                              isDisabled={!roomAssignment.isActive}
                             />
 
                             
