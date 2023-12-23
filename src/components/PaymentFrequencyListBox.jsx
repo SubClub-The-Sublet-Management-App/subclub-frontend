@@ -39,14 +39,14 @@ export default function PaymentFrequencyListBox({ onChange, value }) {
             <Listbox.Options className='absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black/5 focus:outline-none sm:text-sm'>
               {paymentFrequency.map((frequency, frequencyIdx) => (
                 <Listbox.Option
-                key={frequencyIdx}
-                className={({ active }) =>
-                  `relative cursor-default select-none py-2 pl-10 pr-4 ${
-                    active ? 'bg-gray-100 text-primary' : 'text-gray-600'
-                  }`
-                }
-                value={frequency.frequency}
-              >
+                  key={frequencyIdx}
+                  className={({ active }) =>
+                    `relative cursor-default select-none py-2 pl-10 pr-4 ${
+                      active ? 'bg-gray-100 text-primary' : 'text-gray-600'
+                    }`
+                  }
+                  value={frequency.frequency}
+                >
                   {({ selected }) => (
                     <>
                       <span

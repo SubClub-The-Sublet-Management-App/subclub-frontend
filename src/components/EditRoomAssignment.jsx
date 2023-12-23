@@ -21,8 +21,8 @@ export default function EditRoomAssignment({
   const token = localStorage.getItem('userToken');
 
   // To handle successfull and error messages to user
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalMessage, setModalMessage] = useState('');
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   // initialise the status of the selected room, occupant and payment frequency
   const [selectedRoom, setSelectedRoom] = useState(roomAssignment.room._id);
@@ -67,7 +67,9 @@ export default function EditRoomAssignment({
   const [rentalPayment, setRentalPayment] = useState(
     roomAssignment.rentalPayment
   );
-  const [rentalPaymentFrequency] = useState(roomAssignment.rentalPaymentFrequency);
+  const [rentalPaymentFrequency] = useState(
+    roomAssignment.rentalPaymentFrequency
+  );
 
   // Check if input field has change otherwise keep current information
   const handleUpdateRoomAssignment = () => {
@@ -113,9 +115,6 @@ export default function EditRoomAssignment({
       token,
       'PATCH'
     );
-    console.log(data);
-    console.log('room asisgnment id:', roomAssignment._id);
-
   };
 
   return (
@@ -230,11 +229,10 @@ export default function EditRoomAssignment({
                   Payment Frequency
                 </label>
                 <div className='mt-2'>
-
-                <PaymentFrequencyListBox
-                  value={rentalPaymentFrequency}
-                  onChange={handleFrequencySelect}
-                />
+                  <PaymentFrequencyListBox
+                    value={rentalPaymentFrequency}
+                    onChange={handleFrequencySelect}
+                  />
                 </div>
               </div>
               <div className='w-full p-2'>

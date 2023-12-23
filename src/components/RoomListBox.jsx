@@ -11,7 +11,7 @@ export default function RoomListBox({ onRoomSelect, value }) {
     error,
   } = useFetch('https://sub-club-ce3cc207c2f9.herokuapp.com/rooms');
   // initialise selection state
-  const [selected, setSelected] =useState(value || null);
+  const [selected, setSelected] = useState(value || null);
 
   useEffect(() => {
     if (rooms && rooms.length > 0) {
