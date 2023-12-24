@@ -2,12 +2,6 @@
 
 🌎 [Deployed App](https://thesubclubapp.netlify.app/)
 
-🖥 [Frontend Repo](https://github.com/SubClub-The-Sublet-Management-App/subclub-frontend)
-
-🖥 [Backend Repo](https://github.com/SubClub-The-Sublet-Management-App/SubClub-backend/settings)
-
-📖 [Part A Documentation Repo](https://github.com/SubClub-The-Sublet-Management-App/SubClub-Docs)
-
 ## Overview
 
 Sub.club is a web application that addresses Victoria's housing challenges by providing a streamlined solution for those looking to share their home by subletting. This application simplifies the management of rooms, occupants(tenant) and agreements made with each occupant. Focused on ease of use and automation, it aims to improve the subletting experience, filling a gap in the market left by existing solutions such as paper or Excel-based methods.
@@ -281,3 +275,54 @@ The Sub-Club App site map
 
 ## Frontend Libraries & Dependencies:
 
+### Production Dependencies:
+
+1. **@headlessui/react:**
+   - Description: A set of completely unstyled, fully accessible UI components for React.
+   - Usage: Used for building accessible user interfaces.
+
+2. **@tailwindcss/forms:**
+   - Description: Tailwind CSS plugin that provides styles for form elements.
+   - Usage: Enhances styling for form elements in the project.
+
+3. **axios:**
+   - Description: A promise-based HTTP client for the browser and Node.js.
+   - Usage: Used for making HTTP requests to interact with a backend or API.
+
+4. **react:**
+   - Description: A JavaScript library for building user interfaces.
+   - Usage: Core library for building the React application.
+
+5. **react-dom:**
+   - Description: DOM-specific methods for React.
+   - Usage: Necessary for rendering React components in the DOM.
+
+6. **react-icons:**
+   - Description: A library of popular icons for React.
+   - Usage: Provides a collection of icons for use in the application.
+
+7. **react-router-dom:**
+   - Description: DOM bindings for React Router.
+   - Usage: Enables navigation and routing in the React application.
+
+8. **react-scripts:**
+   - Description: Configuration and scripts for Create React App.
+   - Usage: Handles the build, start, and test scripts for the React application.
+
+9. **react-spinners:**
+   - Description: A collection of loading spinner components for React.
+   - Usage: Provides loading indicators for better user experience during data fetching.
+
+10. **web-vitals:**
+    - Description: Library for tracking web vitals.
+    - Usage: Measures and reports essential web performance metrics.
+
+### Development Dependencies:
+
+1. **prettier:**
+   - Description: A code formatter that enforces a consistent code style.
+   - Usage: Used for formatting code during development to maintain code consistency.
+
+2. **tailwindcss:**
+   - Description: A utility-first CSS framework for rapidly building custom user interfaces.
+   - Usage: Provides a set of utility classes for styling components in the project.
