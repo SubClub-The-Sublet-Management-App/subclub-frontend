@@ -39,7 +39,7 @@ export default function LogInPage() {
 
       // navigate to the root page after a delay
       setTimeout(() => {
-        navigate('/');
+        navigate('/rooms');
       }, 500);
     } catch (error) {
       // extract the error message from the response
