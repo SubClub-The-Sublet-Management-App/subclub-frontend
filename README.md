@@ -1,12 +1,12 @@
 # SubClub - The Sublet Management App
 
-🌎 Deployed App: https://thesubclubapp.netlify.app/
+🌎 [Deployed App](https://thesubclubapp.netlify.app/)
 
-🖥 Client Repo: https://github.com/SubClub-The-Sublet-Management-App/subclub-frontend
+🖥 [Frontend Repo](https://github.com/SubClub-The-Sublet-Management-App/subclub-frontend)
 
-🖥 Server Repo: https://github.com/SubClub-The-Sublet-Management-App/SubClub-backend/settings
+🖥 [Backend Repo](https://github.com/SubClub-The-Sublet-Management-App/SubClub-backend/settings)
 
-📖 Part A Documentation Repo: https://github.com/SubClub-The-Sublet-Management-App/SubClub-Docs
+📖 [Part A Documentation Repo](https://github.com/SubClub-The-Sublet-Management-App/SubClub-Docs)
 
 ## Overview
 
@@ -182,7 +182,102 @@ _____
 
 The Sub-Club App site map
 
-![SubClub site map](./src/assets/images/SubClub-sitemap.drawio.png)
+![SubClub site map](/readme-img//SubClub-sitemap.drawio.png)
 
 ## Screenshot of the website
+
+### Desktop view
+
+#### Signup page
+![signup-page](/readme-img/Signup-page.png)
+
+#### Login page
+![login-page](/readme-img/Login-page.png)
+
+#### Rooms page
+*Display all available rooms*
+
+![Rooms-page](/readme-img/Rooms-page.png)
+
+#### Add new Room 
+*Displays a form and sends a post request to the backend to add a new room*.
+
+![Add-new-room-page](/readme-img/Add-new-room-page.png)
+
+#### Update a Room
+*Displays a prefill form and sends a patch request to the backend to update a room*.
+
+![Update-room-page](/readme-img/Update-room.png)
+
+
+#### Delete a Rooom - confirm delete message
+*Displays a pop up messages for user to confirm a room deletion*.
+
+![Delete-room-page](/readme-img/Confirmation-message-delete-room.png)
+
+
+#### Occupants Page
+*Display all occupants profile*
+
+![Occupants-page](/readme-img//Occupants-page.png)
+
+#### Occupants - view occupant contact information
+*Display occupants contacts when click on "Contacts" button*
+
+![Occupants-page-occupant-contacts](/readme-img/Occupants-page-view-ocupant-contact-information.png)
+
+#### Add new Occupant
+*Displays a form and sends a post request to the backend to add a new occupant*.
+
+![Add-new-occupant-1](/readme-img/Add-new-occupant-1.png)
+![Add-new-occupant-2](/readme-img/Add-new-occupant-2.png)
+
+#### Update an occupant
+*Displays a prefill form and sends a patch request to the backend to update an occupant profile*
+
+![Update-occupant-1](/readme-img/Update-occupant-1.png)
+![Update-occupant-2](/readme-img/Update-occupant-2.png)
+
+#### Delete an Occupant- confirm delete message
+*Displays a pop-up message for the user to confirm the deletion of an occupant profile and send the delete request to the backend on confirmation*
+
+![Delete-occupant](/readme-img/Confirmation-message-delete-room.png)
+
+
+### Room Assignment page
+*Display all rooom assignments*
+
+![Room-assignment-page](/readme-img/Room-assignment-page-all-assignments-1.png)
+
+
+#### Room Assignments - view assignment payment agreement information
+*Display payment agreement  information of the room assignment when click on "Agreement" button*
+
+![Room-assignment-page-view-agreement-info](/readme-img/Room-assignment-page-agreement-information.png)
+
+
+#### Add new Room Assignment
+*Displays a form and sends a post request to the backend to add a new room assignment*.
+
+![Add-new-room-assignment](/readme-img/Add-new-room-assignment-page.png)
+
+#### Update a Room Assignment
+*Displays a prefill form and sends a patch request to the backend to update a room assignment*.
+
+![Update-room-assignment](/readme-img/Update-room-assignment.png)
+
+
+#### Cancel a Rooom Assignment- confirm cancel message
+*Displays a pop-up message for the user to confirm the cancellation of a room assignment and send a patch request to the backend to change assignment status on confirmation**
+
+![Cancel-room-assignment](/readme-img/Confirmation-message-cancel-room-assignment.png)
+
+#### View of a cancelled Rooom Assignment
+
+*Change the status of the room assignment to "Cancelled" and disables the cancel button*
+
+![Cancelled-room-assignment](/readme-img/Room-assignment-status-change.png)
+
+
+## Frontend Libraries & Dependencies:
 
