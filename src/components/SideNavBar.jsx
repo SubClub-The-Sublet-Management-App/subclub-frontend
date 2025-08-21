@@ -93,7 +93,7 @@ function SideNavBar({ onResize }) {
 
   return (
     <div
-      className={`fixed top-0 left-0 h-screen transition-all duration-300 ease-in-out z-50 bg-lightPrimary ${
+      className={`fixed top-0 left-0 h-screen transition-all duration-300 ease-in-out z-50 bg-primary ${
         isEnlarge ? 'w-64' : 'w-16'
       }`}
     >
