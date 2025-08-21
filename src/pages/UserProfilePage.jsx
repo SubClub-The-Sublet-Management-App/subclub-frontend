@@ -34,7 +34,8 @@ export default function UserProfilePage() {
   };
 
   const validatePhoneNumber = (phone) => {
-    const phoneRegex = /^[+]?[1-9][\d]{0,15}$/;
+    // Allow numbers, + symbol, max 15 characters
+    const phoneRegex = /^[+\d]{1,15}$/;
     return phoneRegex.test(phone.replace(/\s/g, ''));
   };
 
@@ -157,7 +158,7 @@ export default function UserProfilePage() {
     );
   }
 
-  const profile = profileData?.data || {};
+  const profile = profileData?.user || {};
 
   return (
     <div>
@@ -290,8 +291,8 @@ export default function UserProfilePage() {
                         type="tel"
                         name="phoneNumber"
                         id="phoneNumber"
-                        maxLength="20"
-                        pattern="[+]?[0-9\s\-\(\)]+"
+                        maxLength="15"
+                        pattern="[+\d]{1,15}"
                         className="placeholder-text"
                         placeholder="Enter your phone number"
                         defaultValue={profile.phoneNumber || ''}
@@ -378,23 +379,11 @@ export default function UserProfilePage() {
                       </p>
                     </div>
                   </div>
-                  <div className="grid grid-cols-1 gap-6 sm:grid-cols-3">
+                  <div className="grid grid-cols-1 gap-6 sm:grid-cols-1">
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-1">City</label>
                       <p className="text-gray-900 p-3 bg-gray-50 rounded-md">
                         {profile.address?.city || ''}
-                      </p>
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">Post Code</label>
-                      <p className="text-gray-900 p-3 bg-gray-50 rounded-md">
-                        {profile.address?.postCode || ''}
-                      </p>
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">State</label>
-                      <p className="text-gray-900 p-3 bg-gray-50 rounded-md">
-                        {profile.address?.state || ''}
                       </p>
                     </div>
                   </div>
@@ -408,16 +397,12 @@ export default function UserProfilePage() {
                       street: event.target.elements.street.value,
                       number: event.target.elements.number.value,
                       city: event.target.elements.city.value,
-                      postCode: event.target.elements.postCode.value,
-                      state: event.target.elements.state.value,
                     };
 
                     const addressFields = {};
                     if (rawData.street) addressFields.street = sanitizeInput(rawData.street);
                     if (rawData.number) addressFields.number = parseInt(rawData.number);
                     if (rawData.city) addressFields.city = sanitizeInput(rawData.city);
-                    if (rawData.postCode) addressFields.postCode = sanitizeInput(rawData.postCode);
-                    if (rawData.state) addressFields.state = sanitizeInput(rawData.state);
 
                     const sanitizedData = {};
                     if (Object.keys(addressFields).length > 0) {
@@ -460,7 +445,7 @@ export default function UserProfilePage() {
                       </div>
                     </div>
 
-                    <div className="grid grid-cols-1 gap-6 sm:grid-cols-3">
+                    <div className="grid grid-cols-1 gap-6 sm:grid-cols-1">
                       <div>
                         <label htmlFor="city" className="block text-sm font-medium text-gray-700 mb-2">
                           City
@@ -472,34 +457,6 @@ export default function UserProfilePage() {
                           className="placeholder-text"
                           placeholder="Enter your city"
                           defaultValue={profile.address?.city || ''}
-                        />
-                      </div>
-
-                      <div>
-                        <label htmlFor="postCode" className="block text-sm font-medium text-gray-700 mb-2">
-                          Post Code
-                        </label>
-                        <input
-                          type="text"
-                          name="postCode"
-                          id="postCode"
-                          className="placeholder-text"
-                          placeholder="Enter your post code"
-                          defaultValue={profile.address?.postCode || ''}
-                        />
-                      </div>
-
-                      <div>
-                        <label htmlFor="state" className="block text-sm font-medium text-gray-700 mb-2">
-                          State
-                        </label>
-                        <input
-                          type="text"
-                          name="state"
-                          id="state"
-                          className="placeholder-text"
-                          placeholder="Enter your state"
-                          defaultValue={profile.address?.state || ''}
                         />
                       </div>
                     </div>
