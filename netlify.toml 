@@ -2,3 +2,17 @@
 from = "/*"
 to = "/index.html"
 status = 200
+
+[build]
+  command = "npm run build"
+  publish = "build"
+
+[context.production]
+  command = "npm run build"
+  publish = "build"
+
+[context.deploy-preview]
+  command = ""     # prevents PRs from building
+
+[context.branch-deploy]
+  command = ""  # prevents other branch builds

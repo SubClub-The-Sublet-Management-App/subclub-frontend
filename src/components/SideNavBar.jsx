@@ -14,9 +14,9 @@ import {
 } from 'react-icons/fa';
 import { IoLogOutOutline } from 'react-icons/io5';
 
-function SideNavBar() {
+function SideNavBar({ onResize }) {
   const [selected, setSelected] = useState(0);
-  const [isEnlarge, setIsEnlarge] = useState(window.innerWidth > 768);
+  const [isEnlarge, setIsEnlarge] = useState(true);
   const { setIsAuthenticated } = useContext(AuthContext);
 
   const nav = [
@@ -65,10 +65,23 @@ function SideNavBar() {
   ];
 
   const checkScreenSize = () => {
-    setIsEnlarge(window.innerWidth > 768);
+    const newIsEnlarge = window.innerWidth > 768;
+    setIsEnlarge(newIsEnlarge);
+    if (onResize) {
+      onResize(newIsEnlarge);
+    }
+  };
+
+  const toggleSidebar = () => {
+    const newIsEnlarge = !isEnlarge;
+    setIsEnlarge(newIsEnlarge);
+    if (onResize) {
+      onResize(newIsEnlarge);
+    }
   };
 
   useEffect(() => {
+    checkScreenSize();
     window.addEventListener('resize', checkScreenSize);
     return () => window.removeEventListener('resize', checkScreenSize);
   }, []);
@@ -80,17 +93,17 @@ function SideNavBar() {
 
   return (
     <div
-      className={` relative min-h-screen transition-all duration-700 ease-in-out transform z-500 ${
-        isEnlarge ? 'w-64 bg-lightPrimary' : 'w-0'
-      } ${isEnlarge ? 'lg:block' : 'lg:hidden'}`}
+      className={`fixed top-0 left-0 h-screen transition-all duration-300 ease-in-out z-50 bg-primary ${
+        isEnlarge ? 'w-64' : 'w-16'
+      }`}
     >
       <div className='flex flex-col'>
-        <div className='app-logo mt-6 self-center hide-on-small'>
-          <img src={logo} alt='Logo' />
+        <div className={`app-logo mt-6 self-center transition-opacity duration-300 ${isEnlarge ? 'opacity-100' : 'opacity-0 hidden'}`}>
+          <img src={logo} alt='Logo' className="h-12" />
         </div>
         <button
-          className='md:hidden h-8 w-8 mt-6 ml-6 p-1 text-primary  hover:text-yellow-400'
-          onClick={() => setIsEnlarge(!isEnlarge)}
+          className='h-8 w-8 mt-6 ml-4 p-1 text-white hover:text-yellow-400 transition-colors duration-200'
+          onClick={toggleSidebar}
         >
           {isEnlarge ? (
             <FaTimes className='h-full w-full' />
@@ -98,48 +111,47 @@ function SideNavBar() {
             <FaBars className='h-full w-full' />
           )}
         </button>
-        <div className='nav-container pt-6'>
-          <nav
-            className={`inline-flex flex-col space-y-2 ${
-              isEnlarge ? 'block' : 'hidden'
-            }`}
-          >
-            {isEnlarge &&
-              nav.map((link, index) => (
-                <NavLink
-                  key={index}
-                  to={link.to}
-                  className={`flex items-center ${
-                    isEnlarge ? 'text-white ml-6' : 'text-gray-600'
-                  } py-2 cursor-pointer hover:bg-indigo-100 hover:text-primary ${
-                    selected === index ? 'text-yellow-300' : ''
-                  } pl-2 pr-6 w-48`}
-                  onClick={() => setSelected(index)}
-                >
-                  <span className='w-8 h-8 p-1 flex items-center justify-center mr-4'>
-                    {selected === index
-                      ? React.createElement(link.selectedIcon)
-                      : React.createElement(link.icon)}
-                  </span>
-                  <span className='font-medium select-none sm:block lg:block'>
+        <div className='nav-container pt-6 flex-1'>
+          <nav className='flex flex-col space-y-2'>
+            {nav.map((link, index) => (
+              <NavLink
+                key={index}
+                to={link.to}
+                className={`flex items-center text-white py-3 cursor-pointer hover:bg-indigo-100 hover:text-primary transition-colors duration-200 ${
+                  selected === index ? 'text-yellow-300 bg-indigo-100 bg-opacity-10' : ''
+                } ${isEnlarge ? 'px-6' : 'px-4 justify-center'}`}
+                onClick={() => setSelected(index)}
+                title={!isEnlarge ? link.name : ''}
+              >
+                <span className='w-6 h-6 flex items-center justify-center'>
+                  {selected === index
+                    ? React.createElement(link.selectedIcon, { className: 'w-5 h-5' })
+                    : React.createElement(link.icon, { className: 'w-5 h-5' })}
+                </span>
+                {isEnlarge && (
+                  <span className='font-medium select-none ml-4 transition-opacity duration-300'>
                     {link.name}
                   </span>
-                </NavLink>
-              ))}
+                )}
+              </NavLink>
+            ))}
           </nav>
-          {isEnlarge && (
-            <button
-              className={`absolute bottom-0 w-full h-14 flex items-center justify-center bg-secondary text-white px-6 py-2 cursor-pointer hover:bg-indigo-100 hover:text-primary z-20`}
-              onClick={handleLogout}
-            >
-              <span className='w-8 h-8 p-1 flex items-center justify-center '>
-                <IoLogOutOutline className='w-8 h-8' />
-              </span>
-              <span className='font-medium select-none sm:block lg:block'>
+          <button
+            className={`absolute bottom-0 left-0 right-0 h-14 flex items-center bg-secondary text-white cursor-pointer hover:bg-indigo-100 hover:text-primary transition-colors duration-200 ${
+              isEnlarge ? 'justify-start px-6' : 'justify-center'
+            }`}
+            onClick={handleLogout}
+            title={!isEnlarge ? 'Logout' : ''}
+          >
+            <span className='w-6 h-6 flex items-center justify-center'>
+              <IoLogOutOutline className='w-5 h-5' />
+            </span>
+            {isEnlarge && (
+              <span className='font-medium select-none ml-4 transition-opacity duration-300'>
                 Logout
               </span>
-            </button>
-          )}
+            )}
+          </button>
         </div>
       </div>
     </div>
