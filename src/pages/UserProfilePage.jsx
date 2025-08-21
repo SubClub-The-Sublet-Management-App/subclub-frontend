@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import handleSubmit from '../functions/handleSubmit';
 import { useNavigate } from 'react-router-dom';
 import ModalMessages from '../components/ModalMessages';
+import useFetch from '../functions/useFetch';
+import { ClipLoader } from 'react-spinners';
 
 const backendUrl = process.env.REACT_APP_BACKEND_URL;
 
@@ -11,6 +13,15 @@ export default function UserProfilePage() {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalMessage, setModalMessage] = useState('');
+  const [isEditMode, setIsEditMode] = useState(false);
+
+  // Fetch user profile data
+  const {
+    data: profileData,
+    isLoading,
+    error,
+    refetch,
+  } = useFetch(`${backendUrl}/users/profile`);
 
   const sanitizeInput = (input) => {
     if (typeof input !== 'string') return input;
@@ -71,8 +82,10 @@ export default function UserProfilePage() {
       (responseData) => {
         setModalMessage(responseData.message || 'Profile updated successfully!');
         setIsModalOpen(true);
+        setIsEditMode(false);
+        refetch(); // Refresh the profile data
         setTimeout(() => {
-          navigate('/profile', { state: { isProfileUpdated: true } });
+          setIsModalOpen(false);
         }, 2000);
       },
       (errorData) => {
@@ -93,13 +106,142 @@ export default function UserProfilePage() {
     );
   };
 
+  // Loading state
+  if (isLoading) {
+    return (
+      <div className="flex flex-col items-center justify-center h-screen">
+        <ClipLoader color='#7E49F2' size={150} />
+        <p className="mt-4 text-gray-600">Loading profile...</p>
+      </div>
+    );
+  }
+
+  // Error state
+  if (error) {
+    return (
+      <div className="flex flex-col items-center justify-center h-screen">
+        <p className="text-red-600 text-lg">Error loading profile: {error}</p>
+        <button 
+          onClick={refetch}
+          className="mt-4 px-4 py-2 bg-primary text-white rounded hover:bg-secondary"
+        >
+          Try Again
+        </button>
+      </div>
+    );
+  }
+
+  const profile = profileData?.data || {};
+
   return (
     <div>
-      <h1 className='m-2 py-2 text-left text-3xl font-bold leading-9 tracking-tight text-gray-900 border-b-2 border-gray-300'>
-        Profile
-      </h1>
+      <div className="flex justify-between items-center m-2 py-2 border-b-2 border-gray-300">
+        <h1 className='text-left text-3xl font-bold leading-9 tracking-tight text-gray-900'>
+          Profile
+        </h1>
+        {!isEditMode ? (
+          <button
+            onClick={() => setIsEditMode(true)}
+            className="px-4 py-2 bg-primary text-white rounded hover:bg-secondary transition-colors"
+          >
+            Edit Profile
+          </button>
+        ) : (
+          <button
+            onClick={() => setIsEditMode(false)}
+            className="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600 transition-colors"
+          >
+            Cancel
+          </button>
+        )}
+      </div>
+
       <div className="max-w-4xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
         <div className="bg-white shadow-lg rounded-lg overflow-hidden">
+          
+          {!isEditMode ? (
+            // Display Mode
+            <div className="px-6 py-8 space-y-8">
+              {/* Personal Information Display */}
+              <div>
+                <h2 className="text-lg font-semibold text-gray-900 mb-4">Personal Information</h2>
+                <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">First Name</label>
+                    <p className="text-gray-900 p-3 bg-gray-50 rounded-md">
+                      {profile.firstName || ''}
+                    </p>
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Last Name</label>
+                    <p className="text-gray-900 p-3 bg-gray-50 rounded-md">
+                      {profile.lastName || ''}
+                    </p>
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Phone Number</label>
+                    <p className="text-gray-900 p-3 bg-gray-50 rounded-md">
+                      {profile.phoneNumber || ''}
+                    </p>
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Date of Birth</label>
+                    <p className="text-gray-900 p-3 bg-gray-50 rounded-md">
+                      {profile.dob ? new Date(profile.dob).toLocaleDateString() : ''}
+                    </p>
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                    <p className="text-gray-900 p-3 bg-gray-50 rounded-md">
+                      {profile.email || ''}
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Address Display */}
+              <div className="border-t border-gray-200 pt-8">
+                <h2 className="text-lg font-semibold text-gray-900 mb-4">Address</h2>
+                <div className="space-y-6">
+                  <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">Street</label>
+                      <p className="text-gray-900 p-3 bg-gray-50 rounded-md">
+                        {profile.address?.street || ''}
+                      </p>
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">Number</label>
+                      <p className="text-gray-900 p-3 bg-gray-50 rounded-md">
+                        {profile.address?.number || ''}
+                      </p>
+                    </div>
+                  </div>
+                  <div className="grid grid-cols-1 gap-6 sm:grid-cols-3">
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">City</label>
+                      <p className="text-gray-900 p-3 bg-gray-50 rounded-md">
+                        {profile.address?.city || ''}
+                      </p>
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">Post Code</label>
+                      <p className="text-gray-900 p-3 bg-gray-50 rounded-md">
+                        {profile.address?.postCode || ''}
+                      </p>
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">State</label>
+                      <p className="text-gray-900 p-3 bg-gray-50 rounded-md">
+                        {profile.address?.state || ''}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ) : (
+            // Edit Mode - Existing Form
 
         <form
           className="px-6 py-8 space-y-8"
@@ -162,6 +304,7 @@ export default function UserProfilePage() {
                   pattern="[A-Za-z\s]+"
                   className="placeholder-text"
                   placeholder="Enter your first name"
+                  defaultValue={profile.firstName || ''}
                 />
               </div>
 
@@ -178,6 +321,7 @@ export default function UserProfilePage() {
                   pattern="[A-Za-z\s]+"
                   className="placeholder-text"
                   placeholder="Enter your last name"
+                  defaultValue={profile.lastName || ''}
                 />
               </div>
 
@@ -193,6 +337,7 @@ export default function UserProfilePage() {
                   pattern="[\+]?[0-9\s\-\(\)]+"
                   className="placeholder-text"
                   placeholder="Enter your phone number"
+                  defaultValue={profile.phoneNumber || ''}
                 />
               </div>
 
@@ -205,6 +350,7 @@ export default function UserProfilePage() {
                   name="dob"
                   id="dob"
                   className="placeholder-text"
+                  defaultValue={profile.dob ? profile.dob.split('T')[0] : ''}
                 />
               </div>
 
@@ -219,6 +365,7 @@ export default function UserProfilePage() {
                   maxLength="100"
                   className="placeholder-text"
                   placeholder="Enter your email address"
+                  defaultValue={profile.email || ''}
                 />
               </div>
             </div>
@@ -239,6 +386,7 @@ export default function UserProfilePage() {
                     id="street"
                     className="placeholder-text"
                     placeholder="Enter your street"
+                  defaultValue={profile.address?.street || ''}
                   />
                 </div>
 
@@ -254,6 +402,7 @@ export default function UserProfilePage() {
                     max="999999"
                     className="placeholder-text"
                     placeholder="Enter your street number"
+                    defaultValue={profile.address?.number || ''}
                   />
                 </div>
               </div>
@@ -269,6 +418,7 @@ export default function UserProfilePage() {
                     id="city"
                     className="placeholder-text"
                     placeholder="Enter your city"
+                    defaultValue={profile.address?.city || ''}
                   />
                 </div>
 
@@ -282,6 +432,7 @@ export default function UserProfilePage() {
                     id="postCode"
                     className="placeholder-text"
                     placeholder="Enter your post code"
+                    defaultValue={profile.address?.postCode || ''}
                   />
                 </div>
 
@@ -295,6 +446,7 @@ export default function UserProfilePage() {
                     id="state"
                     className="placeholder-text"
                     placeholder="Enter your state"
+                    defaultValue={profile.address?.state || ''}
                   />
                 </div>
               </div>
@@ -319,6 +471,7 @@ export default function UserProfilePage() {
             </div>
           </div>
         </form>
+          )}
         </div>
       </div>
       <ModalMessages
