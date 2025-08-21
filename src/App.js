@@ -1,5 +1,6 @@
 import './App.css';
 import { Routes, Route, Outlet } from 'react-router-dom';
+import { useState, useEffect } from 'react';
 import LandingPage from './pages/LandingPage';
 import SignUpPage from './pages/SignUpPage';
 import LogInPage from './pages/LogInPage';
@@ -18,26 +19,36 @@ import Footer from './components/Footer';
 import Header from './components/Header';
 
 function App() {
-  return (
-    <div className='App-container flex'>
-      <div className='flex-grow'>
-        <Routes>
-          <Route path='signup' element={<SignUpPage />} />
-          <Route path='login' element={<LogInPage />} />
+  const [sidebarWidth, setSidebarWidth] = useState(256); // 256px = w-64, 64px = w-16
 
-          <Route
-            path='*'
-            element={
-              <div className='App-container flex lg:flex-row'>
-                <SideNavBar className='lg:w-1/4 md:w-auto sm:w-autho sm:h-6' />
-                <Header className='h-auto w-3/4 righ-0' />
-                <div className='w-full pt-16 pb-16 mx-6 lg:w-3/4'>
+  const handleSidebarResize = (isEnlarged) => {
+    setSidebarWidth(isEnlarged ? 256 : 64);
+  };
+
+  return (
+    <div className='App-container'>
+      <Routes>
+        <Route path='signup' element={<SignUpPage />} />
+        <Route path='login' element={<LogInPage />} />
+
+        <Route
+          path='*'
+          element={
+            <div className='flex min-h-screen'>
+              <SideNavBar onResize={handleSidebarResize} />
+              <Header className='lg:hidden md:hidden' />
+              <div 
+                className='flex-1 min-h-screen transition-all duration-300 ease-in-out'
+                style={{ marginLeft: `${sidebarWidth}px` }}
+              >
+                <div className='p-6'>
                   <Outlet />
-                  <Footer className='self-end' />
                 </div>
+                <Footer />
               </div>
-            }
-          >
+            </div>
+          }
+        >
             <Route
               path=''
               element={
@@ -124,7 +135,6 @@ function App() {
             </Route>
           </Route>
         </Routes>
-      </div>
     </div>
   );
 }
